@@ -4,8 +4,8 @@ import pandas as pd
 # start API session
 from spotipy.oauth2 import SpotifyClientCredentials
 
-client_credentials_manager = SpotifyClientCredentials(client_id='e514ac37b34d474291c39074177907e1',
-                                                      client_secret='d3efb74adf544da7a78d7ad190fe9e62')
+client_credentials_manager = SpotifyClientCredentials(client_id='',
+                                                      client_secret='')
 
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 sp.trace = False
@@ -109,11 +109,65 @@ def get_followers(uri):
     return artist_followers
 
 
-"""
-############## testing to combine in a df
-uri = 'spotify:artist:5pKCCKE2ajJHZ9KAiaK11H'
-related = related_artist_names_uris(uri)
+# so, now i need to make a function that, given an artist, spits out a 1, 2, or 3 level cluster PD
+def artist_network_function(x):
+    # first_cluster_list = related_artist_names_uris(x)
+    # col_names = ['artist_name','artist_uri','related_name','related_uri']
 
-cols = ['t1','t2','t3','t4']
-df = pd.DataFrame(related, columns=cols)
-print(df.head())"""
+    # with URIS only
+    first_cluster_list = find_spotify_related_artist_uris(x)
+    col_names = ['artist_uri','related_uri']
+    df1 = pd.DataFrame(first_cluster_list, columns=col_names)
+    # add column for cluster "level"
+    df1['cluster'] = 1
+    #print('df',df1)
+    print('# of 1st related:', len(first_cluster_list))
+
+    # CLUSTER LEVEL 2
+    # now try to get each related artist's cluster
+    second_cluster_list = []
+    for x in df1['related_uri'].tolist():
+
+        #print('checking1', x, time.time())
+
+        # this would be for name, uri, related_name, related_uri
+        # second_cluster_list.append(related_artist_names_uris(x))
+
+        # try with just uris
+        second_cluster_list.append(find_spotify_related_artist_uris(x))
+
+        # print('checking2',x,time.time())
+
+    # flatten
+    second_cluster_list = [item for sublist in second_cluster_list for item in sublist]
+    print('# of 2nd related:', len(second_cluster_list))
+    df2 = pd.DataFrame(second_cluster_list, columns=col_names)
+    # add column for cluster "level"
+    df2['cluster'] = 2
+
+    # CLUSTER LEVEL 3
+    # now try to get each 2nd-related artist's cluster
+    third_cluster_list = []
+    for x in df2['related_uri'].tolist():
+
+        # this would be for name, uri, related_name, related_uri
+        # third_cluster_list.append(related_artist_names_uris(x))
+
+        # just uris
+        third_cluster_list.append(find_spotify_related_artist_uris(x))
+
+        # print('last3rdCluster:', third_cluster_list[-1])
+        # print('checking', x, time.time())
+
+    # flatten
+    third_cluster_list = [item for sublist in third_cluster_list for item in sublist]
+    print('# of 3rd related:', len(third_cluster_list))
+
+    df3 = pd.DataFrame(third_cluster_list, columns=col_names)
+    # add column for cluster "level"
+    df3['cluster'] = 3
+
+    # concatentate
+    frames = [df1, df2, df3]
+    result = pd.concat(frames)
+    return result
