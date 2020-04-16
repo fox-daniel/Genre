@@ -4,8 +4,8 @@ import pandas as pd
 # start API session
 from spotipy.oauth2 import SpotifyClientCredentials
 
-client_credentials_manager = SpotifyClientCredentials(client_id='e514ac37b34d474291c39074177907e1',
-                                                      client_secret='d3efb74adf544da7a78d7ad190fe9e62')
+client_credentials_manager = SpotifyClientCredentials(client_id='',
+                                                      client_secret='')
 
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 sp.trace = False
@@ -109,11 +109,3 @@ def get_followers(uri):
     return artist_followers
 
 
-"""
-############## testing to combine in a df
-uri = 'spotify:artist:5pKCCKE2ajJHZ9KAiaK11H'
-related = related_artist_names_uris(uri)
-
-cols = ['t1','t2','t3','t4']
-df = pd.DataFrame(related, columns=cols)
-print(df.head())"""
