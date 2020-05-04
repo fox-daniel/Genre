@@ -889,7 +889,7 @@
 1300,Mike_Absalom,male,"['pop', 'folk', 'celtic_music']",3
 1303,Mike_Park,male,"['ska_punk', 'punk_rock', 'indie_rock']",3
 1305,J.J._Malone,male,"['west_coast_blues', 'electric_blues', 'soul_blues']",3
-1306,Eric_Gaffney,male,"['alternative_rock', 'indie_rock', 'lo-fi', 'hardcore\\xa0punk']",4
+1306,Eric_Gaffney,male,"['alternative_rock', 'indie_rock', 'lo-fi', 'hardcore_punk']",4
 1308,Billie_Maxwell,female,['country_music'],1
 1310,Marcin_Bors,male,"['rock', 'heavy_metal', 'pop', 'hip_hop']",4
 1311,John_D._Loudermilk,male,"['country', 'pop']",2
@@ -2045,7 +2045,7 @@
 3011,Mickey_Lightfoot,male,"['alternative_hip_hop', 'experimental_hip_hop', 'electronic', 'soul', 'grime', 'afrobeats']",6
 3012,Swae_Lee,male,"['hip_hop', 'trap', 'pop', 'r&b']",4
 3014,Lacey_Sturm,female,"['alternative_metal', 'post-grunge', 'hard_rock', 'nu_metal']",4
-3015,Michael_Stipe,male,"['alternative\\xa0rock', 'folk_rock', 'college\\xa0rock', 'jangle\\xa0pop']",4
+3015,Michael_Stipe,male,"['alternative_rock', 'folk_rock', 'college_rock', 'jangle_pop']",4
 3017,Victor_Wooten,male,"['jazz_fusion', 'jazz_funk_bluegrass_pop']",2
 3018,Simon_Little,male,"['jazz', 'alternative_rock', 'folk_rock']",3
 3021,Ima,female,['pop'],1
@@ -6625,7 +6625,7 @@
 9894,Claudio_Valenzuela,male,['alternative_rock'],1
 9896,Jorge_Celedón,male,['vallenato'],1
 9898,Anna_Bergendahl,female,"['pop', 'folk-pop', 'country_pop']",3
-9899,Marcus_Singletary,male,"['rock', 'progressive\\xa0rock', 'jazz', 'jazz_fusion']",4
+9899,Marcus_Singletary,male,"['rock', 'progressive_rock', 'jazz', 'jazz_fusion']",4
 9900,Adge_Cutler,male,['scrumpy_and_western'],1
 9901,Bob_Gallion,male,['country'],1
 9902,Dionne_Bromfield,female,"['neo-soul', 'r&b']",2
@@ -10878,7 +10878,7 @@
 16271,Kenneth_Carllile,male,['country_music'],1
 16272,Matt_Monro,male,"['easy_listening', 'pop']",2
 16274,Cyndee_Peters,female,['gospel'],1
-16275,Patrick_Dennis,male,"['alternative_rock', 'indie_rock', 'alternative\\xa0country', 'folk_rock', 'punk_rock', 'americana']",6
+16275,Patrick_Dennis,male,"['alternative_rock', 'indie_rock', 'alternative_country', 'folk_rock', 'punk_rock', 'americana']",6
 16276,Peter_Brown,male,"['electronic', 'disco', 'post-disco', 'funk', 'classical', 'dance']",6
 16277,Ron_Wallace,male,['country'],1
 16278,John_Mamann,male,['pop'],1
