@@ -1,0 +1,53 @@
+{
+  "type": "network",
+  "version": "1.0",
+  "data": "data.json",
+  "logo": {
+    "file": "",
+    "link": "",
+    "text": "tom"
+  },
+  "text": {
+    "more": "A network representation of genres in the largest community of our full Wikipedia corpus. Meant for finer distinctions. Each node is a genre tag used in the corpus. \n\nTwo nodes are connected if those two genres were both used in the same artist\u0027s metadata \n(E.g., Lady Gaga is listed as \"Pop • dance • electronic\". This would make 3 node-pairs and edges: [ [pop,dance], [pop, electronic], [dance,electronic]])\n\nCommunities/colors (\"Cluter-ID\") are determined by the Leiden algorithm...or Modularity Class.\nNode size is determined by PageRank.\nEdge-weight is a count of how many times that genre pair occurs in our corpus.",
+    "intro": "Wikipedia Full Corpus Genre Network",
+    "title": "Wikipedia Full Corpus Genre Network"
+  },
+  "legend": {
+    "edgeLabel": "Connections",
+    "colorLabel": "Cluster",
+    "nodeLabel": "Genres"
+  },
+  "features": {
+    "search": true,
+    "groupSelectorAttribute": "Cluter-ID",
+    "hoverBehavior": "dim"
+  },
+  "informationPanel": {
+    "groupByEdgeDirection": false,
+    "imageAttribute": "Cluter-ID"
+  },
+  "sigma": {
+    "drawingProperties": {
+      "defaultEdgeType": "curve",
+      "defaultHoverLabelBGColor": "#002147",
+      "defaultLabelBGColor": "#ddd",
+      "activeFontStyle": "bold",
+      "defaultLabelColor": "#000",
+      "labelThreshold": 10,
+      "defaultLabelHoverColor": "#fff",
+      "fontStyle": "bold",
+      "hoverFontStyle": "bold",
+      "defaultLabelSize": 14
+    },
+    "graphProperties": {
+      "maxEdgeSize": 0.5,
+      "minEdgeSize": 0.2,
+      "minNodeSize": 1,
+      "maxNodeSize": 7
+    },
+    "mouseProperties": {
+      "maxRatio": 20,
+      "minRatio": 0.75
+    }
+  }
+}
