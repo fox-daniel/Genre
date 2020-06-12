@@ -23,10 +23,10 @@ st.markdown("# Gender and Genre")
 now = '2020-05-18-10-06'
 
 # import the data
-X_train = pd.read_csv('/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_X_train_{}.csv'.format(now), index_col = ['artist'])
-y_train = pd.read_csv('/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_y_train_{}.csv'.format(now), index_col = ['artist'])
-X_test = pd.read_csv('/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_X_test_{}.csv'.format(now), index_col = ['artist'])
-y_test = pd.read_csv('/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_y_test_{}.csv'.format(now), index_col = ['artist'])
+X_train = pd.read_csv('./wiki-kaggle_X_train_{}.csv'.format(now), index_col = ['artist'])
+y_train = pd.read_csv('./wiki-kaggle_y_train_{}.csv'.format(now), index_col = ['artist'])
+X_test = pd.read_csv('./wiki-kaggle_X_test_{}.csv'.format(now), index_col = ['artist'])
+y_test = pd.read_csv('./wiki-kaggle_y_test_{}.csv'.format(now), index_col = ['artist'])
 
 # concatenate the train and test data
 X_tot = pd.concat([X_train,X_test])
@@ -51,7 +51,7 @@ def genrelist(string):
 data['genrelist']= data['genrelist'].apply(genrelist)
 
 # import genre labels
-genrelist_df = pd.read_csv('/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/genre_list_{}.csv'.format(now), index_col = 'Unnamed: 0')
+genrelist_df = pd.read_csv('./genre_list_{}.csv'.format(now), index_col = 'Unnamed: 0')
 
 
 
