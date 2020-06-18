@@ -57,10 +57,6 @@ f = data_female.shape[0]
 fem = 100*f/(f+m)
 mal = 100*m/(f+m)
 
-st.write(data.shape[0], "artists with genre and binary-gender labels")
-st.write(f, "female artists, or", round(fem,2), "%")
-st.write(m,'male artists, or',round(mal,2), '%')
-st.write('{} unique genre labels.'.format(genrelist_df.shape[0]))
 
 #Count the number of times that a label occurs:
 @st.cache(persist=True)
@@ -75,8 +71,25 @@ def generate_list(data):
 
 label_value_counts, genres_list_unique = generate_list(data)
 
+# summary stats
+a,b,c = data.genrelist_length.mean(), data.genrelist_length.std(), data.genrelist_length.max()
+
+st.write('### Stats on Artists')
+st.write(data.shape[0], "artists with genre and binary-gender labels")
+st.write(f, "female artists, or", round(fem,2), "%")
+st.write(m,'male artists, or',round(mal,2), '%')
+
+st.write('### Stats on Genre Labels')
+st.write('{} unique genre labels.'.format(genrelist_df.shape[0]))
+st.write('{} genre labels'.format(label_value_counts.Frequency.sum()))
 st.write("The frequency of each genre in descending order")
-label_value_counts
+st.dataframe(label_value_counts.style)
+
+st.write('### Stats on Genre Labels and Artists')
+st.write('Mean number of genre labels per artist: {}.'.format(round(a,2)))
+st.write('STD of the number of genre labels: {}.'.format(round(b,2)))
+st.write('Max number of genre labels: {}.'.format(c))
+
 
 st.title("Co-Occurrences")
 
@@ -98,6 +111,7 @@ def coocurr(QueryGenre):
     QueryGenre_CoGenres_counts.drop(QueryGenre, axis = 0, inplace = True )
     #QueryGenre_CoGenres_counts.rename_axis( 'counts', inplace = True)
     QueryGenre_CoGenres_counts.index.name = 'genres'
+    QueryGenre_CoGenres_counts.sort_index(inplace = True)
     return QueryGenre_CoGenres_counts
 
 query_genre = st.selectbox('Select a genre and see with which genres it co-occurs.',genres_list_unique)
