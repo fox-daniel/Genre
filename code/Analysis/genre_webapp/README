@@ -1,0 +1,8 @@
+To push a new version of the streamlist web app to aws:
+
+in genre_gender_app.py
+
+on line 15
+
+change: app_dir_loc
+to: app_dir_aws
