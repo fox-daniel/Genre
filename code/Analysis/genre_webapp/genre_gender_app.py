@@ -6,6 +6,7 @@ explore the relationship between music genres and gender.
 import streamlit as st
 import numpy as np
 import pandas as pd
+from functools import partial 
 
 # import matplotlib.pyplot as plt
 # import seaborn as sns; sns.set()
@@ -59,7 +60,7 @@ mal = 100*m/(f+m)
 
 
 #Count the number of times that a label occurs:
-@st.cache(persist=True)
+
 def generate_list(data):
     genre_list_1 = data.genrelist.values.tolist()
     genre_list_1 = [x for y in genre_list_1 for x in y]
@@ -114,7 +115,9 @@ def coocurr(QueryGenre):
     QueryGenre_CoGenres_counts.sort_index(inplace = True)
     return QueryGenre_CoGenres_counts
 
-query_genre = st.selectbox('Select a genre and see with which genres it co-occurs.',genres_list_unique)
+#list_sorted = sorted(genres_list_unique)
+
+query_genre = st.selectbox('Select a genre and see with which genres it co-occurs.', genres_list_unique)
 
 #query_genre = 'hip_hop'
 
@@ -122,3 +125,23 @@ st.write("The genres that co-occurr with",query_genre,":")
 cooccurrences = coocurr(query_genre)
 
 cooccurrences
+
+st.title("Select a genre to see which artists in the data set have been assigned that genre label on Wikipedia.")
+
+
+def artists_with_label(row, label = 'soul'):
+    if label in row.genrelist:
+        return True
+    else:
+        return False
+
+
+def genre_artists(data, label = 'soul'):
+    artists_with = partial(artists_with_label,label = label) # create the partial function for the selected genre
+    data[label] = data.apply(artists_with, axis = 1) # select those artists with the selected genre
+    return data[data[label]].index.sort_values() # produce alphabetical list of artists with the selected genre
+
+query_genre_artist = st.selectbox('Find the artists in a genre.', genres_list_unique)
+queried_genre_artists = genre_artists(data, query_genre_artist)
+
+queried_genre_artists
