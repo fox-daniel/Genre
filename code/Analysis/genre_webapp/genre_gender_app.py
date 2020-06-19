@@ -117,7 +117,10 @@ def coocurr(QueryGenre):
 
 #list_sorted = sorted(genres_list_unique)
 
-query_genre = st.selectbox('Select a genre and see with which genres it co-occurs.', genres_list_unique)
+# alphabetize genres
+genres_alphabetical = sorted(genres_list_unique)
+
+query_genre = st.selectbox('Select a genre and see with which genres it co-occurs.', genres_alphabetical)
 
 #query_genre = 'hip_hop'
 
@@ -141,7 +144,18 @@ def genre_artists(data, label = 'soul'):
     data[label] = data.apply(artists_with, axis = 1) # select those artists with the selected genre
     return data[data[label]].index.sort_values() # produce alphabetical list of artists with the selected genre
 
-query_genre_artist = st.selectbox('Find the artists in a genre.', genres_list_unique)
+
+query_genre_artist = st.selectbox('Find the artists in a genre.', genres_alphabetical)
 queried_genre_artists = genre_artists(data, query_genre_artist)
 
 queried_genre_artists
+
+
+def genres_of_an_artist(data, artist_name = 'La_Palabra'):
+    genres = data.loc[artist_name, 'genrelist']
+    genres = ", ".join(map(str,genres))
+    return genres.title()
+
+artist_name = st.selectbox('Select an artist to see their genres',data.sort_index().index.values.tolist())
+genres_of_artist = genres_of_an_artist(data, artist_name)
+genres_of_artist
