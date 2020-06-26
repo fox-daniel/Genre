@@ -134,12 +134,22 @@ def remove_punctuation_from_word(word):
 
 # Functions needed
 
+
 def to_strings(string):
     """This function takes in a string of the form
-    appearing in the genrelist of the dataframe.
-    It strips the square brackets, commas, and extra quotes."""
-    string = string.strip("[").strip("]").replace("'","").replace(",","").strip("!").replace("+","_")
-    return string
+     appearing in the genrelist of the dataframe.
+     It converts it to a list, then a set (to remove duplicates), and then a string."""
+    string = string.strip("[").strip("]").replace("'","")
+    L = [s for s in string.split(',')]
+    L_new = []
+    for x in L:
+        L_new.append(x.replace(" ","_").lstrip("_").rstrip("_").strip("!").replace("+","_"))
+    while (str("") in L_new):
+        L_new.remove("")
+    L_new = list(set(L_new))
+    L_string = " ".join(L_new)
+    return L_string
+
 
 def to_sets(string):
     """This function takes in a string of the form
@@ -168,5 +178,6 @@ def to_lists(string):
         L_new.append(x.replace(" ","_").lstrip("_").rstrip("_").strip("!").replace("+","_"))
     while (str("") in L_new):
         L_new.remove("")
+    L_new = list(set(L_new))
     return L_new
 
