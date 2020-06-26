@@ -9,7 +9,7 @@ Digital repositories of knowledge such as Wikipedia continue to use music classi
 In the context of music studies, our work refines the understanding of how digital databases are reinforcing historical social inequities. We hope that our work can influence the future designs of recommendation systems.
 
 
-![image](./visualizations/twobins_means.png)
+![image](/visualizations/twobins_means.png)
 
 
 ## Project Description
