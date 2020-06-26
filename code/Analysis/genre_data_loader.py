@@ -7,32 +7,50 @@ import string
 
 class LoadGenreData():
     """Load and prepreocess the genre label data.
-    NOTE: "!" are removed from genre labels. This affects "oi!" and "cuidado!"."
-    "+" is replaced with "_": this affects "ill+hop".
+    NOTE: "!" are removed from genre labels. This affects "oi!" and "cuidado!"
+    Input:
+    date: used for names of data files
+    df_X: optional, X data as DF; overrides paths
+    df_y: optional, y data as DF; overrides paths
+    train and test data paths for X,y -- only used if DF is not provided
     """
-    def __init__(self, date, X_path_train, y_path_train, X_path_test = None, y_path_test = None):
-        
+    
+    
+    def __repr__(self):
+        return "Data Frame {}".format(self.data.iloc[:3])
+
+    def __str__(self):
+        return "Data Frame {}".format(self.__repr__())
+    
+    
+    def __init__(self, date, df_X = None, df_y = None, X_path_train = None, y_path_train = None, X_path_test = None, y_path_test = None):
+    
         self.date = date
-        self.X_path_train = X_path_train
-        self.y_path_train = y_path_train
-        self.X_path_test = X_path_test
-        self.y_path_test = y_path_test
         
-        # import from CSV
-        if X_path_test is None:
-            self.X = pd.read_csv(self.X_path_train, index_col = ['artist'])
+        if df_X  is not None:
+            self.X = df_X
+            self.y = df_y
         else:
-            self.X_train = pd.read_csv(self.X_path_train, index_col = ['artist'])
-            self.X_test = pd.read_csv(self.X_path_test, index_col = ['artist'])
-            self.X = pd.concat([self.X_train,self.X_test])
-            
-        if y_path_test is None:
-            self.y = pd.read_csv(self.y_path_train, index_col = ['artist'])
-        else:
-            self.y_train = pd.read_csv(self.y_path_train, index_col = ['artist'])
-            self.y_test = pd.read_csv(self.y_path_test, index_col = ['artist'])
-            self.y = pd.concat([self.y_train,self.y_test])
-        
+            self.X_path_train = X_path_train
+            self.y_path_train = y_path_train
+            self.X_path_test = X_path_test
+            self.y_path_test = y_path_test
+
+            # import from CSV
+            if X_path_test is None:
+                self.X = pd.read_csv(self.X_path_train, index_col = ['artist'])
+            else:
+                self.X_train = pd.read_csv(self.X_path_train, index_col = ['artist'])
+                self.X_test = pd.read_csv(self.X_path_test, index_col = ['artist'])
+                self.X = pd.concat([self.X_train,self.X_test])
+
+            if y_path_test is None:
+                self.y = pd.read_csv(self.y_path_train, index_col = ['artist'])
+            else:
+                self.y_train = pd.read_csv(self.y_path_train, index_col = ['artist'])
+                self.y_test = pd.read_csv(self.y_path_test, index_col = ['artist'])
+                self.y = pd.concat([self.y_train,self.y_test])
+
         # assemble X,y into DF
         self.data = self.X.join(self.y, how = 'inner', on = 'artist')
 
