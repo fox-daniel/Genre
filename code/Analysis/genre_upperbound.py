@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def UpperBound(df):
+def UpperBound(df_input):
     """Function Description: input is a dataframe 
     with the type of 'data' above. It returns (DataFrame, float):
     DataFrame: a dataframe with the counts for female/male
@@ -12,6 +12,8 @@ def UpperBound(df):
     
     # Initialize list of genre sets and counts:
     genre_sets = [] # a list of the genre sets
+
+    df = df_input.copy(deep = True)
 
     def set_id(row):
         if row.genre_set in genre_sets:
@@ -49,4 +51,5 @@ def UpperBound(df):
     # Calculate the total error of the model
     error = round(set_counts.error_bound.sum()/set_counts.shape[0],6)
     
+
     return set_counts, error
