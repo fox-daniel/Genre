@@ -1,0 +1,154 @@
+# imports
+import numpy as np
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+import string
+
+
+class LoadGenreData():
+    """Load and prepreocess the genre label data.
+    NOTE: "!" are removed from genre labels. This affects "oi!" and "cuidado!"."
+    "+" is replaced with "_": this affects "ill+hop".
+    """
+    def __init__(self, date, X_path_train, y_path_train, X_path_test = None, y_path_test = None):
+        
+        self.date = date
+        self.X_path_train = X_path_train
+        self.y_path_train = y_path_train
+        self.X_path_test = X_path_test
+        self.y_path_test = y_path_test
+        
+        # import from CSV
+        if X_path_test is None:
+            self.X = pd.read_csv(self.X_path_train, index_col = ['artist'])
+        else:
+            self.X_train = pd.read_csv(self.X_path_train, index_col = ['artist'])
+            self.X_test = pd.read_csv(self.X_path_test, index_col = ['artist'])
+            self.X = pd.concat([self.X_train,self.X_test])
+            
+        if y_path_test is None:
+            self.y = pd.read_csv(self.y_path_train, index_col = ['artist'])
+        else:
+            self.y_train = pd.read_csv(self.y_path_train, index_col = ['artist'])
+            self.y_test = pd.read_csv(self.y_path_test, index_col = ['artist'])
+            self.y = pd.concat([self.y_train,self.y_test])
+        
+        # assemble X,y into DF
+        self.data = self.X.join(self.y, how = 'inner', on = 'artist')
+
+    def data(self):
+        return self.data
+    
+    def as_sets(self):
+        """Return view of data with genre labels in a set for each artist;
+        'genrelist' column is not shown"""
+        self.data['genre_set']= self.data['genrelist'].apply(to_sets)
+        # remove old version of genre labels
+        columns = self.data.columns.tolist()
+        columns.remove('genrelist')
+        #columns = pd.Index(columns)
+        return self.data[columns]
+    
+    def as_lists(self):
+        """Return view of data with genre labels in a list for each artist;
+        'genrelist' column is not shown"""
+        self.data['genre_list']= self.data['genrelist'].apply(to_lists)
+        # remove old version of genre labels
+        columns = self.data.columns.tolist()
+        columns.remove('genrelist')
+        #columns = pd.Index(columns)
+        return self.data[columns]
+    
+    def as_strings(self):
+        """Return view of data with genre labels as string for each artist;
+        'genrelist' column is not shown"""
+        self.data['genre_string']= self.data['genrelist'].apply(to_strings)
+        # remove old version of genre labels
+        columns = self.data.columns.tolist()
+        columns.remove('genrelist')
+        #columns = pd.Index(columns)
+        return self.data[columns]
+    
+    # WARNING: don't add a column to self.X in this method; use a temp DF instead
+    def get_list_of_genres(self):
+        """Returns a sorted list of genres for the dataset provided to the instance."""
+        self.X['genre_list']= self.X['genrelist'].apply(to_lists)
+        self.list_of_genres = self.X['genre_list'].values.tolist()
+        self.list_of_genres = [label for artists_labels in self.list_of_genres for label in artists_labels]
+        self.list_of_genres = list(set(self.list_of_genres))
+        self.list_of_genres.sort()
+        return self.list_of_genres
+    
+    def get_sparse_X_vector(self):
+        """Return X as a sparse vector with a 1 in the entry (row, id) if the artist has the label with id
+        Notes on sparse vector commands: 
+        To get the number of nonzero entries: X_sparse.nnz
+        To get the nonzero entries of a row: X_sparse[n:m].nonzero() -- returns list of rows and columns with nonzero entries
+        """
+        self.list_of_genres = self.get_list_of_genres()
+        dict_genre_to_id = dict(zip(self.list_of_genres,range(len(self.list_of_genres))))
+        vec = CountVectorizer(vocabulary = dict_genre_to_id) # uses scipy.sparse.csr_matrix representation
+        self.data_genre_strings = self.as_strings()
+        self.X_genre_string = self.data_genre_strings['genre_string']
+        self.X_sparse = vec.fit_transform(self.X_genre_string)
+        return self.X_sparse
+    
+    def get_dict_genre_to_id(self):
+        """Return dictionary of the form {'label':id_number}
+        """
+        self.list_of_genres = self.get_list_of_genres()
+        dict_genre_to_id = dict(zip(self.list_of_genres,range(len(self.list_of_genres))))
+        return dict_genre_to_id
+    
+    def get_dict_id_to_genre(self):
+        """Return dictionary of the form {id_number:'label'}
+        """
+        self.list_of_genres = self.get_list_of_genres()
+        dict_genre_to_id = dict(zip(range(len(self.list_of_genres)),self.list_of_genres))
+        return dict_genre_to_id
+    
+def remove_punctuation_from_word(word):
+    # remove '!'
+    table = str.maketrans('', '', '!')
+    stripped = word.translate(table) 
+    print(stripped)
+
+
+# Functions needed
+
+def to_strings(string):
+    """This function takes in a string of the form
+    appearing in the genrelist of the dataframe.
+    It strips the square brackets, commas, and extra quotes."""
+    string = string.strip("[").strip("]").replace("'","").replace(",","").strip("!").replace("+","_")
+    return string
+
+def to_sets(string):
+    """This function takes in a string of the form
+    appearing in the genrelist of the dataframe.
+    It strips the square brackets and extra quotes and
+    returns a list of strings where each string is a genre label."""
+    string = string.strip("[").strip("]").replace("'","")
+    L = [s for s in string.split(',')]
+    L_new = []
+    for x in L:
+        L_new.append(x.replace(" ","_").lstrip("_").rstrip("_").strip("!").replace("+","_"))
+    while (str("") in L_new):
+        L_new.remove("")
+    return set(L_new)
+
+
+def to_lists(string):
+    """This function takes in a string of the form
+    appearing in the genrelist of the dataframe.
+    It strips the square brackets and extra quotes and
+    returns a list of strings where each string is a genre label."""
+    string = string.strip("[").strip("]").replace("'","")
+    L = [s for s in string.split(',')]
+    L_new = []
+    for x in L:
+        L_new.append(x.replace(" ","_").lstrip("_").rstrip("_").strip("!").replace("+","_"))
+    while (str("") in L_new):
+        L_new.remove("")
+    return L_new
+
