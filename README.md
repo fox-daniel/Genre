@@ -40,7 +40,7 @@ We will present our work in five ways:
 
 
 
-Bios:
+## Bios:
 
 Daniel Fox is a doctoral candidate in Music at The Graduate Center, CUNY. His writing on music has appeared in Perspectives of New Music and Hyperallergic. His dissertation examines how technology and performance practices used within American experimental music shape our ideas about what is natural. He holds a PhD in mathematics from Duke University and has published math research in the Transactions of the American Mathematical Society and Communications in Analysis and Geometry. His compositions have been performed by the Jack Quartet and Talea Ensemble.
 
