@@ -9,6 +9,9 @@ Digital repositories of knowledge such as Wikipedia continue to use music classi
 In the context of music studies, our work refines the understanding of how digital databases are reinforcing historical social inequities. We hope that our work can influence the future designs of recommendation systems.
 
 
+![image](./visualizations/twobins_means.png)
+
+
 ## Project Description
 
 Is there gender bias in the genre labels for musicians on Wikipedia? This project provides an affirmative answer by combining humanistic and data driven approaches. Research has shown that 21st-century repositories of knowledge residing in media(ting) services like Google or Wikipedia re-inscribe systemic asymmetries.  Rather than sidestepping social bias, automation amplifies existing social inequities.  On Wikipedia, only 15% of biographical articles are about women.  More subtle metrics reveal systematic gender bias in more than just article counts. Wagner et al. demonstrate lexical bias (female is the marked gender) and “assortativity” bias (articles about women are more likely to link to men than the other way around).  
