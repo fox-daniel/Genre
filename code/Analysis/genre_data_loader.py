@@ -155,7 +155,7 @@ def to_sets(string):
     """This function takes in a string of the form
     appearing in the genrelist of the dataframe.
     It strips the square brackets and extra quotes and
-    returns a list of strings where each string is a genre label."""
+    returns a set of strings where each string is a genre label."""
     string = string.strip("[").strip("]").replace("'","")
     L = [s for s in string.split(',')]
     L_new = []
