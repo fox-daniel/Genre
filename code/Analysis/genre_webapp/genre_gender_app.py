@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from functools import partial 
 import plotly.graph_objects as go
+import difflib
 
 # import matplotlib.pyplot as plt
 # import seaborn as sns; sns.set()
@@ -213,11 +214,25 @@ def main():
             genres = ", ".join(map(str,genres))
             return genres.title()
 
-        artist_name = st.selectbox('Select an artist to see their genres',data.sort_index().index.values.tolist())
-        genres_of_artist = genres_of_an_artist(data, artist_name)
-        #genres_of_artist = pd.DataFrame({'Genres':genres_of_artist})
+        #artist_name = st.selectbox('Select an artist to see their genres',data.sort_index().index.values.tolist())
+        
+        
+        # make case insensitive
+        input_text = st.text_input("Type the name of an artist to find matches:")  
+        if input_text:
+            possibilities = data.index.to_list()
+            matches = difflib.get_close_matches(input_text, possibilities, 10, cutoff = 0.6)
+            if matches:
+                match = st.selectbox("Now select a match",matches)
+                artist_name = match
+                genres_of_artist = genres_of_an_artist(data, artist_name)
+                #genres_of_artist = pd.DataFrame({'Genres':genres_of_artist})
+            else:
+                artist_name = 'no matches'
+        else:  
+            genres_of_artist = 'no matches' 
+        
         st.write(genres_of_artist)
-
         # or as a dataframe (still needs str -> list for genres of artist)
         # fig = go.Figure(data=[go.Table(
         # header=dict(values=list(genres_of_artist.columns),
