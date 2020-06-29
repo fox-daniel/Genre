@@ -84,7 +84,7 @@ st.write('### Stats on Genre Labels')
 st.write('{} unique genre labels.'.format(genrelist_df.shape[0]))
 st.write('{} genre labels'.format(label_value_counts.Frequency.sum()))
 st.write("The frequency of each genre in descending order")
-st.dataframe(label_value_counts.style)
+st.dataframe(label_value_counts.head())
 
 st.write('### Stats on Genre Labels and Artists')
 st.write('Mean number of genre labels per artist: {}.'.format(round(a,2)))
@@ -127,7 +127,7 @@ query_genre = st.selectbox('Select a genre and see with which genres it co-occur
 st.write("The genres that co-occurr with",query_genre,":")
 cooccurrences = coocurr(query_genre)
 
-cooccurrences
+st.table(cooccurrences)
 
 st.title("Select a genre to see which artists in the data set have been assigned that genre label on Wikipedia.")
 
@@ -142,13 +142,17 @@ def artists_with_label(row, label = 'soul'):
 def genre_artists(data, label = 'soul'):
     artists_with = partial(artists_with_label,label = label) # create the partial function for the selected genre
     data[label] = data.apply(artists_with, axis = 1) # select those artists with the selected genre
-    return data[data[label]].index.sort_values() # produce alphabetical list of artists with the selected genre
+    artists = data[data[label]].reset_index()
+    artists = pd.DataFrame(artists.artist.sort_values())
+    artists.reset_index(inplace = True, drop = True)
+    artists.columns = ["Artists labeled with {}".format(label)]
+    return artists # produce alphabetical list of artists with the selected genre
 
 
 query_genre_artist = st.selectbox('Find the artists in a genre.', genres_alphabetical)
 queried_genre_artists = genre_artists(data, query_genre_artist)
 
-queried_genre_artists
+st.table(queried_genre_artists.values)
 
 
 def genres_of_an_artist(data, artist_name = 'La_Palabra'):
