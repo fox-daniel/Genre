@@ -33,6 +33,30 @@ def main():
     # join the inputs and outputs
     data = y_tot.join([X_tot], how = 'outer')
 
+    def lower_space(row):
+        string = row.artist.lower()
+        string = string.replace("_"," ")
+        return string
+
+    data.reset_index(inplace = True)
+    data['artist'] = data.apply(lower_space, axis = 1)
+
+
+    def genrelist(string):
+        """This function takes in a string of the form
+        appearing in the genrelist of the dataframe.
+        It strips the square brackets and extra quotes and
+        returns a list of strings where each string is a genre label."""
+        string = string.strip("[").strip("]").replace("'","")
+        L = [s for s in string.split(',')]
+        L_new = []
+        for x in L:
+            L_new.append(x.replace(" ","_").lstrip("_").rstrip("_"))
+        while (str("") in L_new):
+            L_new.remove("")
+        return L_new
+
+        data['genrelist']= data['genrelist'].apply(genrelist)
 
     #This function takes in a string and produces a list
     def genrelist(string):
@@ -171,7 +195,7 @@ def main():
     elif page == "Artists of a Genre":
         st.write("Select a genre to see which artists in the data set have been assigned that genre label on Wikipedia.")
 
-
+        @st.cache
         def artists_with_label(row, label = 'soul'):
             if label in row.genrelist:
                 return True
@@ -181,6 +205,7 @@ def main():
         # alphabetize genres
         genres_alphabetical = sorted(genres_list_unique)
 
+        @st.cache
         def genre_artists(data, label = 'soul'):
             artists_with = partial(artists_with_label,label = label) # create the partial function for the selected genre
             data[label] = data.apply(artists_with, axis = 1) # select those artists with the selected genre
@@ -193,6 +218,8 @@ def main():
 
         query_genre_artist = st.selectbox('Find the artists in a genre.', genres_alphabetical)
         queried_genre_artists = genre_artists(data, query_genre_artist)
+
+
 
         # st.plotly_chart(queried_genre_artists.values)
 
@@ -209,9 +236,12 @@ def main():
 
     elif page == "Genres of an Artist":
         st.write("Select an Artist to see their genres:")
-        def genres_of_an_artist(data, artist_name = 'La_Palabra'):
-            genres = data.loc[artist_name, 'genrelist']
-            genres = ", ".join(map(str,genres))
+        
+        @st.cache
+        def genres_of_an_artist(data, artist_name = 'la palabra'):
+            genres = data[data.artist == artist_name].genrelist.values[0]
+            #genres = ", ".join(map(str,genres))
+            genres = ", ".join(genres)
             return genres.title()
 
         #artist_name = st.selectbox('Select an artist to see their genres',data.sort_index().index.values.tolist())
@@ -220,12 +250,13 @@ def main():
         # make case insensitive
         input_text = st.text_input("Type the name of an artist to find matches:")  
         if input_text:
-            possibilities = data.index.to_list()
-            matches = difflib.get_close_matches(input_text, possibilities, 10, cutoff = 0.6)
+            possibilities = data.artist.to_list()
+            matches = difflib.get_close_matches(input_text, possibilities, 5, cutoff = 0.6)
             if matches:
                 match = st.selectbox("Now select a match",matches)
                 artist_name = match
                 genres_of_artist = genres_of_an_artist(data, artist_name)
+                genres_of_artist = genres_of_artist.replace("_"," ")
                 #genres_of_artist = pd.DataFrame({'Genres':genres_of_artist})
             else:
                 artist_name = 'no matches'
