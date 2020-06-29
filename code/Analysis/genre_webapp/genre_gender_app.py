@@ -92,29 +92,33 @@ def main():
 
     elif page == "Genres":
 
-        # summary stats on Genres
-        st.write('### Stats on Genre Labels')
-        st.write('{} unique genre labels.'.format(genrelist_df.shape[0]))
-        st.write('{} genre labels'.format(label_value_counts.Frequency.sum()))
-        st.write("The frequency of each genre in descending order:")
-
-        #st.write('### Stats on Genre Labels and Artists')
-        #st.write('Mean number of genre labels per artist: {}.'.format(round(a,2)))
-        #st.write('STD of the number of genre labels: {}.'.format(round(b,2)))
-        #st.write('Max number of genre labels: {}.'.format(c))
-
-    fig = go.Figure(data=[go.Table(
+        fig = go.Figure(data=[go.Table(
         header=dict(values=list(label_value_counts.columns),
                     fill_color='paleturquoise',
                     align='left'),
         cells=dict(values=[label_value_counts.Genre,label_value_counts.Frequency],
                    fill_color='lavender',
                    align='left'))
-    ])
+        ])
 
-    st.plotly_chart(fig)
+        # summary stats on Genres
+        st.write('### Stats on Genre Labels')
+        st.write('{} unique genre labels.'.format(genrelist_df.shape[0]))
+        st.write('{} genre labels'.format(label_value_counts.Frequency.sum()))
+        st.write("The frequency of each genre in descending order:")
+        st.plotly_chart(fig)
 
+        #st.write('### Stats on Genre Labels and Artists')
+        #st.write('Mean number of genre labels per artist: {}.'.format(round(a,2)))
+        #st.write('STD of the number of genre labels: {}.'.format(round(b,2)))
+        #st.write('Max number of genre labels: {}.'.format(c))
 
-if __name__ == "__main__":
-    main()
+    
+
+    
+
+main()
+# if want to combine with other scripts
+# if __name__ == "__main__":
+#     main()
 
