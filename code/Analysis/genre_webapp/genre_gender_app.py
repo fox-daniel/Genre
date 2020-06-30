@@ -103,7 +103,7 @@ def main():
     label_value_counts.columns = ["Genre",'Frequency']
 
 
-    page = st.sidebar.radio("Choose Stats", options = ["Artists","Genre Counts", "Co-Occurrences of Genres", "Artists of a Genre", "Genres of an Artist"])
+    page = st.sidebar.radio("Choose Stats", options = ["Artists","Genre Counts", "Co-Occurrences of Genres",  "Genres of an Artist"])
 
     if page == "Artists":
 
@@ -192,47 +192,47 @@ def main():
 
         st.plotly_chart(fig)
     
-    elif page == "Artists of a Genre":
-        st.write("Select a genre to see which artists in the data set have been assigned that genre label on Wikipedia.")
+    # elif page == "Artists of a Genre":
+    #     st.write("Select a genre to see which artists in the data set have been assigned that genre label on Wikipedia.")
 
-        @st.cache
-        def artists_with_label(row, label = 'soul'):
-            if label in row.genrelist:
-                return True
-            else:
-                return False
+    #     @st.cache
+    #     def artists_with_label(row, label = 'soul'):
+    #         if label in row.genrelist:
+    #             return True
+    #         else:
+    #             return False
 
-        # alphabetize genres
-        genres_alphabetical = sorted(genres_list_unique)
+    #     # alphabetize genres
+    #     genres_alphabetical = sorted(genres_list_unique)
 
-        @st.cache
-        def genre_artists(data, label = 'soul'):
-            artists_with = partial(artists_with_label,label = label) # create the partial function for the selected genre
-            data[label] = data.apply(artists_with, axis = 1) # select those artists with the selected genre
-            artists = data[data[label]].reset_index()
-            artists = pd.DataFrame(artists.artist.sort_values())
-            artists.reset_index(inplace = True, drop = True)
-            artists.columns = ["Artists labeled with {}".format(label)]
-            return artists # produce alphabetical list of artists with the selected genre
-
-
-        query_genre_artist = st.selectbox('Find the artists in a genre.', genres_alphabetical)
-        queried_genre_artists = genre_artists(data, query_genre_artist)
+    #     @st.cache
+    #     def genre_artists(data, label = 'soul'):
+    #         artists_with = partial(artists_with_label,label = label) # create the partial function for the selected genre
+    #         data[label] = data.apply(artists_with, axis = 1) # select those artists with the selected genre
+    #         artists = data[data[label]].reset_index()
+    #         artists = pd.DataFrame(artists.artist.sort_values())
+    #         artists.reset_index(inplace = True, drop = True)
+    #         artists.columns = ["Artists labeled with {}".format(label)]
+    #         return artists # produce alphabetical list of artists with the selected genre
 
 
+    #     query_genre_artist = st.selectbox('Find the artists in a genre.', genres_alphabetical)
+    #     queried_genre_artists = genre_artists(data, query_genre_artist)
 
-        # st.plotly_chart(queried_genre_artists.values)
 
-        fig = go.Figure(data=[go.Table(
-        header=dict(values=list(queried_genre_artists.columns),
-                    fill_color='paleturquoise',
-                    align='left'),
-        cells=dict(values=[queried_genre_artists['{}'.format(x)] for x in queried_genre_artists.columns],
-                   fill_color='lavender',
-                   align='left'))
-        ])
 
-        st.plotly_chart(fig)
+    #     # st.plotly_chart(queried_genre_artists.values)
+
+    #     fig = go.Figure(data=[go.Table(
+    #     header=dict(values=list(queried_genre_artists.columns),
+    #                 fill_color='paleturquoise',
+    #                 align='left'),
+    #     cells=dict(values=[queried_genre_artists['{}'.format(x)] for x in queried_genre_artists.columns],
+    #                fill_color='lavender',
+    #                align='left'))
+    #     ])
+
+    #     st.plotly_chart(fig)
 
     elif page == "Genres of an Artist":
         st.write("Select an Artist to see their genres:")
