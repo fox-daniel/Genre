@@ -2,6 +2,7 @@
 
 ### Project Team Members: Tom Johnson and Daniel Fox
 
+You can try the [prototype](http://18.222.33.220:8501/) for our web app that allows users to explore the relationships between artists, genres, and gender in the dataset of ~15,000 artists.
 
 ## Abstract
 
