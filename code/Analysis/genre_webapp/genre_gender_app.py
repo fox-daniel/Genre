@@ -7,6 +7,7 @@ import streamlit as st
 from functools import partial 
 import plotly.graph_objects as go
 from difflib import get_close_matches
+import sklearn
 
 import numpy as np
 import pandas as pd
