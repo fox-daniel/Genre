@@ -57,6 +57,9 @@ def clean_genre_data():
     # drop unnecessary columns
     data.drop(['retrieved','genre','retrieved_clean', 'match', 'genre_respell'], axis = 1, inplace = True)
     
+    # optional: swap out ampersand
+    data['genrelist'] = data.apply(swap_out_ampersand, axis = 1)
+    
     return data
     
 # Functions called:
@@ -204,6 +207,17 @@ def cleaning_individual_cases_2(data):
                                  'new_wave',
                                  'samba_rock']
     return data
+
+
+def swap_out_ampersand(row):
+    """This function replaces & with _and_
+    in the list elements of the genrelist column.
+    It is useful if Word2Vec is used"""
+    newlist = []
+    for label in row.genrelist:
+        label = label.replace("&","_and_")
+        newlist.append(label)
+    return newlist
 
 # the dictionary needed to respell genre labels
 respell_dict = {r'r & b': 'r&b', 
