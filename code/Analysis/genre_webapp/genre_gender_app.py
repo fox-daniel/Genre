@@ -18,13 +18,13 @@ import pandas as pd
 import genre_data_loader
 #from nested_subsets import NestedSubsets
 
-now = '2020-05-18-10-06'
+now = '2020-07-07-09-58'
 
 # import matplotlib.pyplot as plt
 # import seaborn as sns; sns.set()
 
 # choose app_dir_loc or app_dir_aws from which to import paths
-from app_dir_loc import path_X_train, path_X_test, path_y_train, path_y_test
+from app_dir_aws import path_X_train, path_X_test, path_y_train, path_y_test
 
 
 def load_data():
