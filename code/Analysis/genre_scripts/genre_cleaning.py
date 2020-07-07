@@ -167,7 +167,7 @@ def cleaning_individual_cases_2(data):
                                  'experimental',
                                  'mpb',
                                  'progressive_rock',
-                                 'post-punk',
+                                 'post_punk',
                                  'new_wave',
                                  'samba_rock']
     return data
