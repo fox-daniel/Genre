@@ -20,7 +20,7 @@ def cleaning_individual_cases_1(data):
     data.at[22536, 'genre'] = "['observational', 'blue comedy', 'musical_comedy']"
     data.at[12183, 'genre'] = "['jazz', 'blues', 'jump_blues', 'rock']"
     data.at[9679, 'genre'] = "['singer-songwriter', 'world beat', 'alternative pop', 'lounge', 'electronic', 'world music', 'indie pop', 'j-synth', 'cool jazz', 'fusion', 'electro-pop']"
-    data.at[2374, 'genre'] = "['blues', 'ballads', 'rock & roll']"
+    data.at[2374, 'genre'] = "['blues', 'ballads', 'rock&roll']"
     data.at[7946, 'genre'] = "['dancehall', 'reggae fusion', 'eurodance']"
     data.at[12500, 'genre'] = "['classical', 'folk']"
     data.at[9732, 'genre'] = "['pop', 'r&b', ' electropop', 'alternative pop']"
@@ -30,9 +30,10 @@ def cleaning_individual_cases_1(data):
     data.at[10414, 'genre'] = "['cabaret', 'pop', 'contemporary opera']"
     data.at[14600, 'genre'] = "['rock', 'pop', 'jazz', 'r&b', 'country', ' blues', 'roots']"
     data.at[10022, 'genre'] = "['indie','alternative rock', 'pop punk']"
-    data.at[13433, 'genre'] = "['blues', 'roots', ' rock and roll', 'americana', 'rhythm and blues', 'alternative']"
+    data.at[13433, 'genre'] = "['blues', 'roots', ' rock&roll', 'americana', 'rhythm&blues', 'alternative']"
     data.at[2295, 'genre'] = "['r&b', ' jazz', 'funk', 'rock']"
     data.at[3017, 'genre'] = "['jazz fusion', 'jazz funk', 'bluegrass pop']"
     data.at[18667, 'genre'] = "['jazz', 'latin-jazz', 'pop']"
+    data.at[8968, 'genre'] = "['rock', 'folk_rock', 'alternative_rock', 'acoustic_rock', 'reggae']"
     
     return data
