@@ -9,7 +9,6 @@ class LoadGenreData():
     """Load and prepreocess the genre label data.
     NOTE: "!" are removed from genre labels. This affects "oi!" and "cuidado!"
     Input:
-    Must use KeyWord args for all but 'date'
     date: used for names of data files
     df_X: optional, X data as DF; overrides paths
     df_y: optional, y data as DF; overrides paths
@@ -28,7 +27,7 @@ class LoadGenreData():
     
         self.date = date
         
-        if df_X is not None:
+        if df_X  is not None:
             self.X = df_X
             self.y = df_y
         else:
@@ -104,8 +103,7 @@ class LoadGenreData():
         To get the number of nonzero entries: X_sparse.nnz
         To get the nonzero entries of a row: X_sparse[n:m].nonzero() -- returns list of rows and columns with nonzero entries
         """
-        self.list_of_genres = self.get_list_of_genres()
-        dict_genre_to_id = dict(zip(self.list_of_genres,range(len(self.list_of_genres))))
+        dict_genre_to_id = self.get_dict_genre_to_id()
         vec = CountVectorizer(vocabulary = dict_genre_to_id) # uses scipy.sparse.csr_matrix representation
         self.data_genre_strings = self.as_strings()
         self.X_genre_string = self.data_genre_strings['genre_string']
@@ -126,31 +124,6 @@ class LoadGenreData():
         dict_genre_to_id = dict(zip(range(len(self.list_of_genres)),self.list_of_genres))
         return dict_genre_to_id
     
-    def get_number_of_female(self):
-            """Return percent of data set that is female
-            """
-            x = self.data['gender'].value_counts()
-            return x.loc['female']
-
-    def get_number_of_male(self):
-            """Return percent of data set that is female
-            """
-            x = self.data['gender'].value_counts()
-            return x.loc['male']
-
-    def get_percent_female(self):
-        """Return percent of data set that is female
-        """
-        x = self.data['gender'].value_counts()
-        return x.loc['female']/self.data.shape[0]
-
-    def get_percent_male(self):
-        """Return percent of data set that is female
-        """
-        x = self.data['gender'].value_counts()
-        return x.loc['male']/self.data.shape[0]
-
-
 def remove_punctuation_from_word(word):
     # remove '!'
     table = str.maketrans('', '', '!')
