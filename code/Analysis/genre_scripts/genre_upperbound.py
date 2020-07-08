@@ -30,9 +30,9 @@ def UpperBound(df_input):
     df.reset_index(inplace = True)
 
     set_counts = pd.pivot_table(df, index = 'set_id', columns = 'gender', values = 'artist', aggfunc = 'count', fill_value = 0)
-    set_counts['genre_set_encoded'] = set_counts.apply(lambda x: genre_sets[int(x.name)], axis = 1)
+    set_counts['genre_set'] = set_counts.apply(lambda x: genre_sets[int(x.name)], axis = 1)
     set_counts['total'] = set_counts.female + set_counts.male
-    set_counts = set_counts[['total','female','male','genre_set_encoded']]
+    set_counts = set_counts[['total','female','male','genre_set']]
 
     # Calculate a column that classifies by majority vote for each genre set
     def classify(row):
