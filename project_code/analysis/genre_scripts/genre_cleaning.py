@@ -10,7 +10,7 @@ from datetime import datetime
 def clean_genre_data():
     
 
-    data = pd.read_csv('../../data/genre_lists/data_to_be_cleaned/wiki-kaggle_genres_rescrape.csv', header = 0)
+    data = pd.read_csv('data/genre_lists/data_to_be_cleaned/wiki-kaggle_genres_rescrape.csv', header = 0)
     data.drop(['Unnamed: 0'], axis = 1, inplace = True)
 
     data['retrieved'] = data['retrieved'].replace('none', np.nan)
