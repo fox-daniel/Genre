@@ -49,7 +49,7 @@ def UpperBound(df_input):
         lambda x: x.female if x.classifier == 0 else x.male, axis = 1)
     
     # Calculate the total error of the model
-    error = round(set_counts.error_bound.sum()/set_counts.shape[0],6)
+    error = round(set_counts.error_bound.sum()/df.shape[0],6)
     
 
     return set_counts, error
