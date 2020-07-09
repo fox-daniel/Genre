@@ -124,6 +124,18 @@ class LoadGenreData():
         dict_genre_to_id = dict(zip(range(len(self.list_of_genres)),self.list_of_genres))
         return dict_genre_to_id
     
+    def get_percent_female(self):
+        """return the percentage of the loaded data that is female artists"""
+        fem = self.data[self.data.gender == 'female'].shape[0]
+        percent_fem = fem/self.data.shape[0]
+        return percent_fem
+
+    def get_percent_male(self):
+        """return the percentage of the loaded data that is female artists"""
+        mal = self.data[self.data.gender == 'male'].shape[0]
+        percent_mal = mal/self.data.shape[0]
+        return percent_mal
+
 def remove_punctuation_from_word(word):
     # remove '!'
     table = str.maketrans('', '', '!')
