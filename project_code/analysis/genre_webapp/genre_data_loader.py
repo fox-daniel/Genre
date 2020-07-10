@@ -87,6 +87,16 @@ class LoadGenreData():
         #columns = pd.Index(columns)
         return self.data[columns]
     
+    def get_balanced_sample(self):
+        data_fem = self.data[self.data.gender == 'female']
+        data_mal = self.data[self.data.gender == 'male']
+        fem_size = data_fem.shape[0]
+        data_mal_sub = data_mal.sample(fem_size)
+        data_sub = pd.concat([data_fem, data_mal_sub])
+        data_sub.sample(frac = 1)
+        return data_sub
+
+
     # WARNING: don't add a column to self.X in this method; use a temp DF instead
     def get_list_of_genres(self):
         """Returns a sorted list of genres for the dataset provided to the instance."""
@@ -124,6 +134,18 @@ class LoadGenreData():
         dict_genre_to_id = dict(zip(range(len(self.list_of_genres)),self.list_of_genres))
         return dict_genre_to_id
     
+    def get_percent_female(self):
+        """return the percentage of the loaded data that is female artists"""
+        fem = self.data[self.data.gender == 'female'].shape[0]
+        percent_fem = fem/self.data.shape[0]
+        return percent_fem
+
+    def get_percent_male(self):
+        """return the percentage of the loaded data that is female artists"""
+        mal = self.data[self.data.gender == 'male'].shape[0]
+        percent_mal = mal/self.data.shape[0]
+        return percent_mal
+
 def remove_punctuation_from_word(word):
     # remove '!'
     table = str.maketrans('', '', '!')

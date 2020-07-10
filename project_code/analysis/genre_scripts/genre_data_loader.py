@@ -87,6 +87,16 @@ class LoadGenreData():
         #columns = pd.Index(columns)
         return self.data[columns]
     
+    def get_balanced_sample(self):
+        data_fem = self.data[self.data.gender == 'female']
+        data_mal = self.data[self.data.gender == 'male']
+        fem_size = data_fem.shape[0]
+        data_mal_sub = data_mal.sample(fem_size)
+        data_sub = pd.concat([data_fem, data_mal_sub])
+        data_sub.sample(frac = 1)
+        return data_sub
+
+
     # WARNING: don't add a column to self.X in this method; use a temp DF instead
     def get_list_of_genres(self):
         """Returns a sorted list of genres for the dataset provided to the instance."""
