@@ -1,13 +1,10 @@
 # Genre and Gender
-
 ### Project Team Members: Daniel Fox and Tom Johnson
-
-You can try the [prototype](http://18.222.33.220:8501/) for our web app that allows users to explore the relationships between artists, genres, and gender in the dataset of ~15,000 artists.
+- To explore this project in more detail, you can run the Jupyter notebook main.ipynb.
+- Try the [prototype](http://18.222.33.220:8501/) for our web app that allows users to explore the relationships between artists, genres, and gender in the dataset of ~15,000 artists.
 ## Introduction
 Digital repositories of knowledge such as Wikipedia continue to use music classification systems derived from prejudiced hierarchical systems. Despite initial claims of neutral algorithmic approaches, broad research has shown how automation perpetuates the existing social inequities. Within music culture it is thus important to ask, Is there gender bias in the genre labels for musicians on Wikipedia? Our project answers this question in the affirmative using a dataset of ~15,000 music artists labeled with their genders and genres. We approach this through three modes of analysis: 1) We have shown that female artists are significantly under represented within the set of artists with six or more genre labels. 2) We will use machine learning models to predict gender from genre label combinations. 3) We will analyze gender bias within latent communities of networks of artists and genres. We will present our findings by a) deploying an interactive web app using cloud computing to promote data curiosity and user exploration, b) publishing a peer reviewed article in a music journal, c) publishing popular and technical posts on Medium, c) posting our processed data set on Kaggle.com, and d) posting our code in a public GitHub repository. 
 In the context of music studies, our work refines the understanding of how digital databases are reinforcing historical social inequities. We hope that our work can influence the future designs of recommendation systems.
-
-
 ### For 1-5 genre labels there is little bias. But for >5 genre labels, female artists are underrepresented. 
 
 ![Gender Bias](./visualizations/twobin_means_selection.png)
