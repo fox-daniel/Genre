@@ -87,16 +87,6 @@ class LoadGenreData():
         #columns = pd.Index(columns)
         return self.data[columns]
     
-    def get_balanced_sample(self):
-        data_fem = self.data[self.data.gender == 'female']
-        data_mal = self.data[self.data.gender == 'male']
-        fem_size = data_fem.shape[0]
-        data_mal_sub = data_mal.sample(fem_size)
-        data_sub = pd.concat([data_fem, data_mal_sub])
-        data_sub.sample(frac = 1)
-        return data_sub
-
-
     # WARNING: don't add a column to self.X in this method; use a temp DF instead
     def get_list_of_genres(self):
         """Returns a sorted list of genres for the dataset provided to the instance."""
@@ -134,27 +124,50 @@ class LoadGenreData():
         dict_genre_to_id = dict(zip(range(len(self.list_of_genres)),self.list_of_genres))
         return dict_genre_to_id
     
-    def get_percent_female(self):
-        """return the percentage of the loaded data that is female artists"""
-        fem = self.data[self.data.gender == 'female'].shape[0]
-        percent_fem = fem/self.data.shape[0]
-        return percent_fem
+    def get_coo_matrix(self):
+        """Return the (values, (rows, cols)) for a COO matrix
+        of the genre sets"""
+        self.as_lists()
+        dict_gid = self.get_dict_genre_to_id()
+        
+        def coo_rows(row):
+            """Get the row info for the COO sparse matrix
+            version of the genre sets"""
+            row = [self.data.index.get_loc(row.name) for genre in row.genre_list]
+            return np.array(row)
 
-    def get_percent_male(self):
-        """return the percentage of the loaded data that is female artists"""
-        mal = self.data[self.data.gender == 'male'].shape[0]
-        percent_mal = mal/self.data.shape[0]
-        return percent_mal
+        def coo_cols(row):
+            """Get the col info for the COO sparse matrix
+            version of the genre sets"""
+            col = [dict_gid[genre] for genre in row.genre_list]
+            return np.array(col)
+
+        def coo_values(row):
+            """Get the values info for the COO sparse matrix
+            version of the genre sets"""
+            values = [1 for genre in row.genre_list]
+            return np.array(values)
+
+        self.data['coorows'] = self.data.apply(coo_rows, axis = 1)
+        self.data['coocols'] = self.data.apply(coo_cols, axis = 1)
+        self.data['coovalues'] = self.data.apply(coo_values, axis = 1)
+
+        rows = create_coo_list(self.data.coorows)
+        cols = create_coo_list(self.data.coocols)
+        values = create_coo_list(self.data.coovalues)
+
+        coo_info = (values, (rows, cols))
+        
+        return coo_info
+    
+
+# Functions needed
 
 def remove_punctuation_from_word(word):
     # remove '!'
     table = str.maketrans('', '', '!')
     stripped = word.translate(table) 
     print(stripped)
-
-
-# Functions needed
-
 
 def to_strings(string):
     """This function takes in a string of the form
@@ -202,3 +215,12 @@ def to_lists(string):
     L_new = list(set(L_new))
     return L_new
 
+# for getting a coo matrix
+
+def create_coo_list(series):
+    """turn series (column of df) whose values
+    are numpy arrays into a list
+    used as info for a coo matrix"""
+    info = series.values.tolist()
+    info = np.hstack(info)
+    return info
