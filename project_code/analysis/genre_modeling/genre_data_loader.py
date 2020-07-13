@@ -57,6 +57,16 @@ class LoadGenreData():
     def data(self):
         return self.data
     
+
+    def get_balanced_sample(self):
+        data_fem = self.data[self.data.gender == 'female']
+        data_mal = self.data[self.data.gender == 'male']
+        fem_size = data_fem.shape[0]
+        data_mal_sub = data_mal.sample(fem_size)
+        data_sub = pd.concat([data_fem, data_mal_sub])
+        data_sub.sample(frac = 1)
+        return data_sub
+
     def as_sets(self):
         """Return view of data with genre labels in a set for each artist;
         'genrelist' column is not shown"""
