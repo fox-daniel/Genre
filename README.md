@@ -3,48 +3,37 @@
 - To explore this project in more detail, you can run the Jupyter notebook main.ipynb.
 - Try the [prototype](http://18.222.33.220:8501/) for our web app that allows users to explore the relationships between artists, genres, and gender in the dataset of ~15,000 artists.
 ## Introduction
-Digital repositories of knowledge such as Wikipedia continue to use music classification systems derived from prejudiced hierarchical systems. Despite initial claims of neutral algorithmic approaches, broad research has shown how automation perpetuates the existing social inequities. Within music culture it is thus important to ask, Is there gender bias in the genre labels for musicians on Wikipedia? Our project answers this question in the affirmative using a dataset of ~15,000 music artists labeled with their genders and genres. We approach this through three modes of analysis: 1) We have shown that female artists are significantly under represented within the set of artists with six or more genre labels. 2) We will use machine learning models to predict gender from genre label combinations. 3) We will analyze gender bias within latent communities of networks of artists and genres. We will present our findings by a) deploying an interactive web app using cloud computing to promote data curiosity and user exploration, b) publishing a peer reviewed article in a music journal, c) publishing popular and technical posts on Medium, c) posting our processed data set on Kaggle.com, and d) posting our code in a public GitHub repository. 
-In the context of music studies, our work refines the understanding of how digital databases are reinforcing historical social inequities. We hope that our work can influence the future designs of recommendation systems.
-### For 1-5 genre labels there is little bias. But for >5 genre labels, female artists are underrepresented. 
+Digital repositories of knowledge such as Wikipedia continue to use music classification systems derived from prejudiced hierarchical systems. Despite initial claims of neutral algorithmic approaches, broad research has shown how automation perpetuates the existing social inequities. Within music culture it is thus important to ask, Is there gender bias in the genre labels for musicians on Wikipedia? Our project answers this question in the affirmative using a dataset of ~15,000 music artists labeled with their genders and genres. We have shown that female artists are significantly under represented within the set of artists with six or more genre labels. 
 
-![Gender Bias](./visualizations/twobin_means_selection.png)
-
+In the context of music studies, our work refines the understanding of how digital databases are reinforcing historical social inequities. 
 
 ## Project Description
 
 Is there gender bias in the genre labels for musicians on Wikipedia? This project provides an affirmative answer by combining humanistic and data driven approaches. Research has shown that 21st-century repositories of knowledge residing in media(ting) services like Google or Wikipedia re-inscribe systemic asymmetries.  Rather than sidestepping social bias, automation amplifies existing social inequities.  On Wikipedia, only 15% of biographical articles are about women (Graells-Garrido et al, 2015).  More subtle metrics reveal systematic gender bias in more than just article counts. Wagner et al. demonstrate lexical bias (female is the marked gender) and “assortativity” bias (articles about women are more likely to link to men than the other way around).  
 
-As music listening is increasingly influenced by online databases and recommendation systems, the domain-specific cultural practices encoded in music genre labeling is amplified. Classification of musical types has been guided by prejudiced groupings of musicians and audiences.  If Wikipedia’s metadata reflects this hierarchical tradition, then we expect genres to be unevenly associated with male and female artists. Moving beyond the mere preponderance of male artists, our research reveals the modes through which genre labeling amplifies gender bias.  
+As music listening is increasingly influenced by online databases and recommendation systems, the domain-specific cultural practices encoded in music genre labeling is amplified. Classification of musical types has been guided by prejudiced groupings of musicians and audiences.  If Wikipedia’s metadata reflects this hierarchical tradition, then we expect genres to be unevenly associated with male and female artists. Moving beyond the mere preponderance of male artists, our research reveals one of the modes through which genre labeling amplifies gender bias.  
 
 ### The Data
 
 Our cleaned data set of 15,470 music artists includes names, genders, and the music genres from their Wikipedia infoboxes. Starting from a dataset on Kaggle.com containing the name and gender of singers, we scraped genre metadata from Wikipedia.  Removing artists for which the scraper could not retrieve genre labels reduced the dataset from ~22,000 to ~15,000 artists. We verified the gender on a random sample (1% of our corpus) by referencing pronoun usage for each artist on the artist website, social media page, or Wikipedia entry. Of this 1%, we verified the accuracy of 153/154 to be correct, the incorrect item being a band of multiple people. We dropped all bands from the corpus, reducing our dataset by roughly 25 items. Significant cleaning was required to deal with spelling irregularities. Further, because genre labels are not standardized, we used domain specific knowledge about music genres to make decisions about when to equate labels: “rock & roll” was equated with “rock n roll” but their joint category was kept distinct from “rock.” After imposing these equivalences, there were 1,494 distinct genre labels. Many artists have a single genre label, such as “pop,” whereas one artist had 73 genre labels. The gender breakdown is 31% female and 69% male.
 
-### Methods of Analysis
-
-We analyze the correlation between inferred binary gender labels and the genre labels present in Wikipedia infoboxes for musicians through three lines of investigation:
-
-1.	We have measured how the ratio of actual to expected numbers of female and male artists varies with the number of genre labels assigned to the artist. Our analysis shows that female artists are under-represented within the category of artists having at least six genre labels assigned to them, whereas there is no gender bias with regard to the number of genre labels for artists with five or less labels. (See the box plots above.)
-2.	We use machine learning to train models that predict the gender of an artist based only on their genre labels. The goal is not the classifier in itself, but information that we can derive from it about what features predict gender. This can provide new insight into how genre labeling is biased with respect to gender beyond what we have already discovered about the number of genre labels. Given any input, a model that always predicts male will be correct 69% of the time because 69% of the artists in our sample are male. A model using a majority vote for each genre-set that appears has an in-sample accuracy of 86%. This is an upper bound for the full in-sample accuracy of any model. The goal of modeling is to get close to 86% accuracy. On subsets, such as a validation or test set, the upper bound is higher. The graph below shows how the upper bound to accuracy of any model varies on 10 different randomly selected sequence of nested subsets.
+There are inherent limits to the accuracy of any model that classifies the gender of an artist based on their genre labels alone. This arises because, for most genre lists, such as [pop, rock, blues], there will be both female and male artists with those three labels. For this particular data set, the upper bound decreases on subsamples. The graph below shows the upper bound for accuracy on 10 different randomly selected nested subsets.
 
 ![Upper Bound to Accuracy](./visualizations/upperbound_curves.png)
 
-We are also exploring the option of training models on gender-balanced subsets to see if this can reveal more information about the relationship between gender and genre. 
+### Methods of Analysis
 
-3.	We will analyze the gender distribution of the latent communities within the network structure of genres and musicians in our dataset. If there is systemic inequality in genre labels, we expect these graph structures to clump into gendered communities. In particular, we form weighted graphs in which the nodes are genre labels and the weight of an edge is the number of artists that have the genre labels of those two nodes. We will then compare the graph-centrality of a genre to its gender bias.
+We analyze the correlation between inferred binary gender labels and the genre labels present in Wikipedia infoboxes for musicians. We have measured how the ratio of actual to expected numbers of female and male artists varies with the number of genre labels assigned to the artist. Our analysis shows that female artists are under-represented within the category of artists having at least six genre labels assigned to them, whereas there is no gender bias with regard to the number of genre labels for artists with five or less labels. (See the box plots above.)
 
-### Presentation
+### Conclusions
 
-We will present our work in five ways:
+We have shown that in this data set of 15470 music artists from Wikipedia, there is a significant correlation between the number of genres assigned to an artist and their gender. In particular, male artists are more likely than female artists to have 6 or more genre labels assigned to them.
 
-1. We will promote data curiosity by deploying an interactive web app allowing users to query the dataset and models. We have a working prototype running on a virtual machine in AWS. 
-2. Submission of a peer-reviewed article.
-3. A pair of Medium articles. One for a general audience explaining the results and one that focuses on technical aspects (code and statistics) 
-4. Posting the code in public GitHub repositories.
-5. Posting the processed dataset to Kaggle.com.
+### For 1-5 genre labels there is little gender bias. But for >5 genre labels, female artists are underrepresented. 
 
+![Gender Bias](./visualizations/twobin_means_selection.png)
 
-
+We also show that there is a nontrivial upper bound for the accuracy of any model that tries to predict gender based on the genre labels of an artist. On the full sample the bound is 86%; on subsamples of size 2000 the expected value of the upper bound is 90%.
 
 ## Bios:
 

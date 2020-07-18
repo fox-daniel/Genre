@@ -359,7 +359,7 @@ def plot_bias_stats_selection(biases):
       
     fig, axs = plt.subplots(2,1, sharey = True, figsize = (14,10))
     fig.tight_layout(pad = 6.0)
-    fig.suptitle('The ratio of actual to expected percentages of artists. For 1-5 genre lables, there is little bias. The error bars show one STD', fontsize = 20)
+    #fig.suptitle('The ratio of actual to expected percentages of artists. For 1-5 genre lables, there is little bias. The error bars show one STD', fontsize = 20)
     axs[0].bar(fem_small_index,fem_small, color = 'orange', yerr = eb_fem_small, capsize = 4, label = 'female')
     axs[0].bar(mal_small_index,mal_small, color = 'purple', yerr = eb_mal_small, capsize = 4, label = 'male')
     axs[1].bar(fem_large_index,fem_large, color = 'orange', yerr = eb_fem_large, capsize = 4, label = 'female')
