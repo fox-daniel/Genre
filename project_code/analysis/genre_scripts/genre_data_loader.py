@@ -183,6 +183,13 @@ class LoadGenreData():
         percent_mal = mal/self.data.shape[0]
         return percent_mal
 
+    
+    def remove_outliers(self, threshold):
+        """Remove artists with list lengths greater than the specified threshold."""
+        self.threshold = threshold
+        self.data = self.data[self.data.genrelist_length < self.threshold]
+        return self.data
+        
 # Functions needed
 
 def remove_punctuation_from_word(word):
