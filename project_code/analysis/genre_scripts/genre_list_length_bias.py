@@ -363,7 +363,7 @@ def plot_bias_stats_selection(biases):
     axs[0].bar(fem_small_index,fem_small, color = 'orange', yerr = eb_fem_small, capsize = 4, label = 'female')
     axs[0].bar(mal_small_index,mal_small, color = 'purple', yerr = eb_mal_small, capsize = 4, label = 'male')
     axs[1].bar(fem_large_index,fem_large, color = 'orange', yerr = eb_fem_large, capsize = 4, label = 'female')
-    axs[1].bar(mal_large_index,mal_large, color = 'purple', yerr = eb_mal_large, capsize = 4, label = 'female')
+    axs[1].bar(mal_large_index,mal_large, color = 'purple', yerr = eb_mal_large, capsize = 4, label = 'male')
 
     # x range
     axs[0].set_xlim(0,6)
