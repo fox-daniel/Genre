@@ -1,8 +1,8 @@
 # Genre and Gender
 ### Project Team Members: Daniel Fox and Tom Johnson
 - To explore this project in more detail run the Jupyter notebook main.ipynb. You may need to first set up a virtual environment to have the correct dependencies:
-	- $ pip install -r requirements.txt
-	- $ jupyter notebook &
+	- ```$ pip install -r requirements.txt```
+	- ```$ jupyter notebook &```
 	- open the notebook main.ipynb
 	- switch the kernel to genre_env. 
 	- run the notebook  
