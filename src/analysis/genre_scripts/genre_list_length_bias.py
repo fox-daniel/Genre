@@ -1,6 +1,6 @@
 
-import project_code.analysis.genre_scripts.genre_data_loader as genre_data_loader
-from project_code.analysis.genre_scripts.nested_subsets import NestedSubsets
+import src.analysis.genre_scripts.genre_data_loader as genre_data_loader
+from src.analysis.genre_scripts.nested_subsets import NestedSubsets
 
 import numpy as np
 import pandas as pd
