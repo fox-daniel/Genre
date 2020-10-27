@@ -108,7 +108,7 @@ def create_length_counts_by_gender(df):
     Output: dataframe with counts by gender and total for each
         length of genre list in the dataset
 
-    Use: called by bin_bias to calculate gender bias in two bins,
+    Use: called by bias_two_bins and bias_11_bins to calculate gender bias in two bins,
     small (<6) and large (>5) genre list lengths
     """
 
@@ -134,7 +134,7 @@ def create_length_counts_by_gender(df):
     return df
 
 
-def bin_bias(df, percent_fem, percent_mal):
+def bias_two_bins(df, percent_fem, percent_mal):
     """
     The bin_est function estimates actual/expected ratios
     for male and female by genre list length by binning
@@ -230,7 +230,7 @@ def bias_on_subsets(
         for subset in subsets:
             size = subset.shape[0]
             if size >= step_size:  # excluding the remainder samples
-                twobins = bin_bias(subset, percent_fem, percent_mal)  # calculate biases
+                twobins = bias_two_bins(subset, percent_fem, percent_mal)  # calculate biases
 
                 # set indices of twobins to match the slice of relevant biases
                 indices = [[size], ["1-5", ">5"]]
