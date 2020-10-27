@@ -69,6 +69,13 @@ def generate_bias_plots():
         percent_mal=percent_mal,
     )
 
+    # generate figure with bias_11_bins
+    lcbg_11_bins = bias_11_bins(data, percent_fem, percent_mal)
+    fig_11_bins = plot_bias_11_bins(lcbg_11_bins)
+
+    # save the figure
+    fig_11_bins.savefig("/Users/Daniel/Code/Genre/visualizations/11_bins_bias.png")
+
     # generate figure with paths (path = biases for each nested subset)
     fig_paths = plot_bias_paths(biases, k)
 
@@ -89,7 +96,7 @@ def generate_bias_plots():
         "/Users/Daniel/Code/Genre/visualizations/twobin_means_selection.png"
     )
 
-    return fig_paths, fig_means, fig_means_select
+    return fig_11_bins, fig_paths, fig_means, fig_means_select
 
 
 # functions called
@@ -198,10 +205,13 @@ def bias_11_bins(df, percent_fem, percent_mal):
     
     return lcbg
 
-def plot_bias_ll_bin(df_bias):
+def plot_bias_11_bins(df_bias):
     """Generate figure with bar graph showing gender bias
-    for 11 bins."""
-    
+    for 11 bins.
+
+    Input: dataframe returned from bias_11_bins()
+    """
+
     x_fem = np.arange(1, 3*df_bias.shape[0], 3)
     x_mal = np.arange(2, 3*df_bias.shape[0], 3)
     xticklabels = df_bias.index.to_list()
