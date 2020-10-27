@@ -3,6 +3,7 @@ from src.genre_scripts.nested_subsets import NestedSubsets
 
 import numpy as np
 import pandas as pd
+from scipy.stats import chisquare
 
 import matplotlib.pyplot as plt
 
@@ -236,6 +237,13 @@ def plot_bias_11_bins(df_bias):
     axs.legend()
     
     return fig
+
+# calculate p-value for chi-sq test
+def p_values_chi_sq(lcbg_11_bin):
+    f_exp = lcbg_11_bin.loc[:,['female artist expected','male artist expected']].to_numpy()
+    f_obs = lcbg_11_bin.loc[:,['female artist count','male artist count']].to_numpy()
+    _, [p_fem, p_mal] = chisquare(f_obs, f_exp)
+    return p_fem, p_mal
 
 
 def bias_on_subsets(
