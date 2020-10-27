@@ -177,6 +177,57 @@ def bias_two_bins(df, percent_fem, percent_mal):
     return twobins
 
 
+def bias_11_bins(df, percent_fem, percent_mal):
+    """Create dataframe with counts by gender, expected counts 
+    by gender, and bias ratios by gender.
+
+
+    Use: plot_bias_11_bin()
+    """
+    lcbg = create_length_counts_by_gender(df)
+    # bin 11+
+    lcbg.loc['11+'] = lcbg.loc[11:].sum()
+    inds = [*range(1,11),'11+']
+    lcbg = lcbg.loc[inds]
+    # expected values
+    lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
+    lcbg['male artist expected'] = np.floor(lcbg['total']*percent_mal).astype(int)
+    # bias ratio
+    lcbg['female bias'] = lcbg['female artist count']/lcbg['female artist expected']
+    lcbg['male bias'] = lcbg['male artist count']/lcbg['male artist expected']
+    
+    return lcbg
+
+def plot_bias_ll_bin(df_bias):
+    """Generate figure with bar graph showing gender bias
+    for 11 bins."""
+    
+    x_fem = np.arange(1, 3*df_bias.shape[0], 3)
+    x_mal = np.arange(2, 3*df_bias.shape[0], 3)
+    xticklabels = df_bias.index.to_list()
+    xlabel_pos = np.arange(1.5,3*df_bias.shape[0],3)
+    
+    fig, axs = plt.subplots(figsize = (14,10))
+    fig.tight_layout(pad = 6.0)
+    fig.suptitle('The ratio of actual to expected numbers of female and male artists.', fontsize = 20)
+    axs.bar(x_fem,df_bias['female bias'], color = 'orange', label = 'female')
+    axs.bar(x_mal,df_bias['male bias'], color = 'purple', label = 'male')
+
+    # y range
+    axs.set_ylim(0,1.5)
+
+    # styles
+    # axs.set_title('Gender Bias In Genre List Length'.title(), fontsize = 14)
+
+    axs.set_xticks(xlabel_pos)
+    axs.set_xticklabels(xticklabels, fontsize = 14, rotation = 0)
+    axs.set_xlabel('Genre List Length', fontsize = 14)
+    axs.set_ylabel('Ratio of Actual to Expected Artists', fontsize = 14)
+    axs.legend()
+    
+    return fig
+
+
 def bias_on_subsets(
     data, k, step_size=None, percentage=0.1, percent_fem=0.5, percent_mal=0.5
 ):
