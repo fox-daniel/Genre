@@ -242,7 +242,10 @@ def plot_bias_11_bins(df_bias):
 def p_value_chi_sq(lcbg_11_bin):
     f_exp = lcbg_11_bin.loc[:,['female artist expected','male artist expected']].to_numpy()
     f_obs = lcbg_11_bin.loc[:,['female artist count','male artist count']].to_numpy()
-    _, p_value = chisquare(f_obs, f_exp, axis = None)
+    # the degrees of freedom should by (r-1)(c-1) where r,c are the number of rows and columns; 
+    # chisquare uses the total number of frequencies minus 1, which is rc-1 for the array f_exp;
+    # rc-1 - (r-1)(c-1) = r+c-2 = 11; so the delta degrees of freedom is 11
+    _, p_value = chisquare(f_obs, f_exp, ddof = 11, axis = None)
     return p_value
 
 
