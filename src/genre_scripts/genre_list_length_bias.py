@@ -141,23 +141,25 @@ def create_length_counts_by_gender(df):
 
     return df
 
+
 def bias_12_bins(df, percent_fem, percent_mal):
-    
+
     lcbg = create_length_counts_by_gender(df)
     # bin 14+
-    lcbg.loc['12+'] = lcbg.loc[12:].sum()
-    inds = [*range(1,12),'12+']
+    lcbg.loc["12+"] = lcbg.loc[12:].sum()
+    inds = [*range(1, 12), "12+"]
     lcbg = lcbg.loc[inds]
     # expected values
-#     lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
-#     lcbg['male artist expected'] = np.floor(lcbg['total']*percent_mal).astype(int)
-    lcbg['female artist expected'] = lcbg['total']*percent_fem
-    lcbg['male artist expected'] = lcbg['total']*percent_mal
+    #     lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
+    #     lcbg['male artist expected'] = np.floor(lcbg['total']*percent_mal).astype(int)
+    lcbg["female artist expected"] = lcbg["total"] * percent_fem
+    lcbg["male artist expected"] = lcbg["total"] * percent_mal
     # bias ratio
-    lcbg['female bias'] = lcbg['female artist count']/lcbg['female artist expected']
-    lcbg['male bias'] = lcbg['male artist count']/lcbg['male artist expected']
-    
+    lcbg["female bias"] = lcbg["female artist count"] / lcbg["female artist expected"]
+    lcbg["male bias"] = lcbg["male artist count"] / lcbg["male artist expected"]
+
     return lcbg
+
 
 def bias_two_bins(df, percent_fem, percent_mal):
     """
@@ -187,21 +189,20 @@ def bias_two_bins(df, percent_fem, percent_mal):
     twobins = lcbg.groupby(["classify"]).agg("sum")
 
     # calculated columns: expected and ratios
-    twobins['female artist expected'] = (percent_fem * twobins["total"])
-    twobins['male artist expected'] = (percent_mal * twobins["total"])
+    twobins["female artist expected"] = percent_fem * twobins["total"]
+    twobins["male artist expected"] = percent_mal * twobins["total"]
     twobins["female bias"] = (
-        twobins["female artist count"] / twobins['female artist expected']
+        twobins["female artist count"] / twobins["female artist expected"]
     )
     twobins["male bias"] = (
-        twobins["male artist count"] / twobins['male artist expected']
+        twobins["male artist count"] / twobins["male artist expected"]
     )
-
 
     return twobins
 
 
 def bias_12_bins(df, percent_fem, percent_mal):
-    """Create dataframe with counts by gender, expected counts 
+    """Create dataframe with counts by gender, expected counts
     by gender, and bias ratios by gender.
 
 
@@ -209,18 +210,18 @@ def bias_12_bins(df, percent_fem, percent_mal):
     """
     lcbg = create_length_counts_by_gender(df)
     # bin 14+
-    lcbg.loc['12+'] = lcbg.loc[12:].sum()
-    inds = [*range(1,12),'12+']
+    lcbg.loc["12+"] = lcbg.loc[12:].sum()
+    inds = [*range(1, 12), "12+"]
     lcbg = lcbg.loc[inds]
     # expected values
-#     lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
-#     lcbg['male artist expected'] = np.floor(lcbg['total']*percent_mal).astype(int)
-    lcbg['female artist expected'] = lcbg['total']*percent_fem
-    lcbg['male artist expected'] = lcbg['total']*percent_mal
+    #     lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
+    #     lcbg['male artist expected'] = np.floor(lcbg['total']*percent_mal).astype(int)
+    lcbg["female artist expected"] = lcbg["total"] * percent_fem
+    lcbg["male artist expected"] = lcbg["total"] * percent_mal
     # bias ratio
-    lcbg['female bias'] = lcbg['female artist count']/lcbg['female artist expected']
-    lcbg['male bias'] = lcbg['male artist count']/lcbg['male artist expected']
-    
+    lcbg["female bias"] = lcbg["female artist count"] / lcbg["female artist expected"]
+    lcbg["male bias"] = lcbg["male artist count"] / lcbg["male artist expected"]
+
     return lcbg
 
 
@@ -230,40 +231,45 @@ def plot_bias_12_bins(df_bias):
 
     Input: dataframe returned from bias_12_bins()
     """
-    x_fem = np.arange(1, 3*df_bias.shape[0], 3)
-    x_mal = np.arange(2, 3*df_bias.shape[0], 3)
+    x_fem = np.arange(1, 3 * df_bias.shape[0], 3)
+    x_mal = np.arange(2, 3 * df_bias.shape[0], 3)
     xticklabels = df_bias.index.to_list()
-    xlabel_pos = np.arange(1.5,3*df_bias.shape[0],3)
-    
-    fig, axs = plt.subplots(figsize = (14,10))
-    fig.tight_layout(pad = 6.0)
-    fig.suptitle('The ratio of observed to expected numbers of female and male artists.', fontsize = 20)
-    axs.bar(x_fem,df_bias['female bias'], color = 'orange', label = 'female')
-    axs.bar(x_mal,df_bias['male bias'], color = 'purple', label = 'male')
+    xlabel_pos = np.arange(1.5, 3 * df_bias.shape[0], 3)
+
+    fig, axs = plt.subplots(figsize=(14, 10))
+    fig.tight_layout(pad=6.0)
+    fig.suptitle(
+        "The ratio of observed to expected numbers of female and male artists.",
+        fontsize=20,
+    )
+    axs.bar(x_fem, df_bias["female bias"], color="orange", label="female")
+    axs.bar(x_mal, df_bias["male bias"], color="purple", label="male")
 
     # y range
-    axs.set_ylim(0,2)
+    axs.set_ylim(0, 2)
 
     # styles
     # axs.set_title('Gender Bias In Genre List Length'.title(), fontsize = 14)
 
     axs.set_xticks(xlabel_pos)
-    axs.set_xticklabels(xticklabels, fontsize = 14, rotation = 0)
-    axs.set_xlabel('Genre List Length', fontsize = 14)
-    axs.set_ylabel('Ratio of Observed to Expected Artists', fontsize = 14)
+    axs.set_xticklabels(xticklabels, fontsize=14, rotation=0)
+    axs.set_xlabel("Genre List Length", fontsize=14)
+    axs.set_ylabel("Ratio of Observed to Expected Artists", fontsize=14)
     axs.legend()
-    
+
     return fig
 
 
 # calculate p-value for chi-sq test
 def p_value_chi_sq(lcbg_bin, ddof):
-    f_exp = lcbg_bin.loc[:,['female artist expected','male artist expected']].to_numpy()
-    f_obs = lcbg_bin.loc[:,['female artist count','male artist count']].to_numpy()
-    # the degrees of freedom should by (r-1)(c-1) where r,c are the number of rows and columns; 
+    f_exp = lcbg_bin.loc[
+        :, ["female artist expected", "male artist expected"]
+    ].to_numpy()
+    f_obs = lcbg_bin.loc[:, ["female artist count", "male artist count"]].to_numpy()
+    # the degrees of freedom should by (r-1)(c-1) where r,c are the number of rows and columns;
     # chisquare uses the total number of frequencies minus 1, which is rc-1 for the array f_exp;
     # rc-1 - (r-1)(c-1) = r+c-2
-    _, p_value = chisquare(f_obs, f_exp, ddof = ddof, axis = None)
+    _, p_value = chisquare(f_obs, f_exp, ddof=ddof, axis=None)
     return p_value
 
 
@@ -320,8 +326,10 @@ def bias_on_subsets(
         for subset in subsets:
             size = subset.shape[0]
             if size >= step_size:  # excluding the remainder samples
-                twobins = bias_two_bins(subset, percent_fem, percent_mal)  # calculate biases
-                twobins = twobins[['female bias','male bias']]
+                twobins = bias_two_bins(
+                    subset, percent_fem, percent_mal
+                )  # calculate biases
+                twobins = twobins[["female bias", "male bias"]]
                 # set indices of twobins to match the slice of relevant biases
                 indices = [[size], ["1-5", ">5"]]
                 columns = [[f"run_{i}"], ["female bias", "male bias"]]
@@ -375,9 +383,7 @@ def plot_bias_paths(biases, k):
     mal_small_runs = np.stack(
         [
             np.flip(
-                df.loc[
-                    idx[:, "1-5"], idx[[f"run_{i}"], ["male bias"]]
-                ].values.flatten()
+                df.loc[idx[:, "1-5"], idx[[f"run_{i}"], ["male bias"]]].values.flatten()
             )
             for i in range(k)
         ]
@@ -395,9 +401,7 @@ def plot_bias_paths(biases, k):
     mal_large_runs = np.stack(
         [
             np.flip(
-                df.loc[
-                    idx[:, ">5"], idx[[f"run_{i}"], ["male bias"]]
-                ].values.flatten()
+                df.loc[idx[:, ">5"], idx[[f"run_{i}"], ["male bias"]]].values.flatten()
             )
             for i in range(k)
         ]
