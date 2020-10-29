@@ -28,11 +28,21 @@ There are inherent limits to the accuracy of any model that classifies the gende
 
 ### Methods of Analysis
 
-We analyze the correlation between inferred binary gender labels and the genre labels present in Wikipedia infoboxes for musicians. We have measured how the ratio of actual to expected numbers of female and male artists varies with the number of genre labels assigned to the artist. Our analysis shows that female artists are under-represented within the category of artists having at least six genre labels assigned to them, whereas there is no gender bias with regard to the number of genre labels for artists with five or less labels. (See the box plots above.)
+We analyze the correlation between inferred binary gender labels and the number of genre labels present in Wikipedia infoboxes for musicians. We compare the observed number of female and male artists with a given number (or numerical range) of genres to the expected number of artists given the percentages of female and male artits in the total population, 31% female and 69% male. The null hypothesis is that there is no correlation between gender and the number of genre labels. We apply $\chi^2$-tests and report the p-values to measure the probability that the observed correlations would arise from chance if the null hypothesis were true. We analyze the data using two levels of detail.
+
+#### 11 Bins
+
+We divide artists into 11 groups. These groups correspond to the number of labels that each artist in the group has, except for the last group, "11+", which counts all artists with 11 or more labels. It is worth noting that, in the current data set, there are 7 female artists with 11 genre labels but no female artists with 12 or more labels. We use the 11+ category to avoid computational problems for the $\chi^2$-test.
+
+#### 2 Bins
+
+use box plots to identify that the ratio of actual to expected numbers of female and male artists varies with the number of genre labels assigned to the artist. 
 
 ### Conclusions
 
 We have shown that in this data set of 15470 music artists from Wikipedia, there is a significant correlation between the number of genres assigned to an artist and their gender. In particular, male artists are more likely than female artists to have 6 or more genre labels assigned to them.
+
+Our analysis shows that female artists are under-represented within the category of artists having at least six genre labels assigned to them, whereas there is no gender bias with regard to the number of genre labels for artists with five or less labels. (See the box plots below.)
 
 ### For 1-5 genre labels there is little gender bias. But for >5 genre labels, female artists are underrepresented. 
 
