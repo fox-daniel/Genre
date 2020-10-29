@@ -70,9 +70,9 @@ def generate_bias_plots():
         percent_mal=percent_mal,
     )
 
-    # generate figure with bias_11_bins
-    lcbg_11_bins = bias_11_bins(data, percent_fem, percent_mal)
-    fig_11_bins = plot_bias_11_bins(lcbg_11_bins)
+    # generate figure with bias_12_bins
+    lcbg_12_bins = bias_12_bins(data, percent_fem, percent_mal)
+    fig_12_bins = plot_bias_12_bins(lcbg_12_bins)
 
     # save the figure
     fig_11_bins.savefig("/Users/Daniel/Code/Genre/visualizations/11_bins_bias.png")
@@ -185,7 +185,7 @@ def bias_two_bins(df, percent_fem, percent_mal):
     return twobins
 
 
-def bias_11_bins(df, percent_fem, percent_mal):
+def bias_12_bins(df, percent_fem, percent_mal):
     """Create dataframe with counts by gender, expected counts 
     by gender, and bias ratios by gender.
 
@@ -193,26 +193,28 @@ def bias_11_bins(df, percent_fem, percent_mal):
     Use: plot_bias_11_bin()
     """
     lcbg = create_length_counts_by_gender(df)
-    # bin 11+
-    lcbg.loc['11+'] = lcbg.loc[11:].sum()
-    inds = [*range(1,11),'11+']
+    # bin 14+
+    lcbg.loc['12+'] = lcbg.loc[12:].sum()
+    inds = [*range(1,12),'12+']
     lcbg = lcbg.loc[inds]
     # expected values
-    lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
-    lcbg['male artist expected'] = np.floor(lcbg['total']*percent_mal).astype(int)
+#     lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
+#     lcbg['male artist expected'] = np.floor(lcbg['total']*percent_mal).astype(int)
+    lcbg['female artist expected'] = lcbg['total']*percent_fem
+    lcbg['male artist expected'] = lcbg['total']*percent_mal
     # bias ratio
     lcbg['female bias'] = lcbg['female artist count']/lcbg['female artist expected']
     lcbg['male bias'] = lcbg['male artist count']/lcbg['male artist expected']
     
     return lcbg
 
-def plot_bias_11_bins(df_bias):
+
+def plot_bias_12_bins(df_bias):
     """Generate figure with bar graph showing gender bias
-    for 11 bins.
+    for 12 bins.
 
-    Input: dataframe returned from bias_11_bins()
+    Input: dataframe returned from bias_12_bins()
     """
-
     x_fem = np.arange(1, 3*df_bias.shape[0], 3)
     x_mal = np.arange(2, 3*df_bias.shape[0], 3)
     xticklabels = df_bias.index.to_list()
@@ -238,14 +240,15 @@ def plot_bias_11_bins(df_bias):
     
     return fig
 
+
 # calculate p-value for chi-sq test
-def p_value_chi_sq(lcbg_11_bin):
-    f_exp = lcbg_11_bin.loc[:,['female artist expected','male artist expected']].to_numpy()
-    f_obs = lcbg_11_bin.loc[:,['female artist count','male artist count']].to_numpy()
+def p_value_chi_sq(lcbg_12_bin):
+    f_exp = lcbg_12_bin.loc[:,['female artist expected','male artist expected']].to_numpy()
+    f_obs = lcbg_12_bin.loc[:,['female artist count','male artist count']].to_numpy()
     # the degrees of freedom should by (r-1)(c-1) where r,c are the number of rows and columns; 
     # chisquare uses the total number of frequencies minus 1, which is rc-1 for the array f_exp;
-    # rc-1 - (r-1)(c-1) = r+c-2 = 11; so the delta degrees of freedom is 11
-    _, p_value = chisquare(f_obs, f_exp, ddof = 11, axis = None)
+    # rc-1 - (r-1)(c-1) = r+c-2 = 12; so the delta degrees of freedom is 12
+    _, p_value = chisquare(f_obs, f_exp, ddof = 12, axis = None)
     return p_value
 
 
