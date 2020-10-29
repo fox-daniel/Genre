@@ -32,7 +32,12 @@ We analyze the correlation between inferred binary gender labels and the number 
 
 #### 12 Bins
 
-We divide artists into 12 groups. These groups correspond to the number of labels that each artist in the group has, except for the last group, "12+", which counts all artists with 12 or more labels. It is worth noting that, in the current data set, there are 7 female artists with 12 genre labels but no female artists with more labels. We use the 12+ category to ensure that the expected number of artists in each category is at least $5$, a condition that ensures the applicability of the $\chi^2$-test.
+We divide artists into 12 groups. These groups correspond to the number of labels that each artist in the group has, except for the last group, "12+", which counts all artists with 12 or more labels. We use the 12+ category to ensure that the expected number of artists in each category is at least $5$, a condition that ensures the applicability of the $\chi^2$-test. It is worth noting that, in the current data set, there no female artists with 12 or more labels. but 19 males with 12 or more labels. Using SciPy's $\chi^2$-test functions we find that the p-value when using 12 categories is $3e-13$, extremely strong confidence in rejecting the null hypothesis. We conclude that there is a correlation between gender and number of genre labels. We can visualize this using a bar plot that reports the ratio 
+
+##### <div align="center">(observed number of artists)/(expected number of artists) </div>
+
+for both male and female artists in each category.
+![Gender Bias by Number of Genre Labels](./visualizations/12_bins_bias.png)
 
 #### 2 Bins
 

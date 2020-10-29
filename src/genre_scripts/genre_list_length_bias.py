@@ -75,7 +75,7 @@ def generate_bias_plots():
     fig_12_bins = plot_bias_12_bins(lcbg_12_bins)
 
     # save the figure
-    fig_11_bins.savefig("/Users/Daniel/Code/Genre/visualizations/11_bins_bias.png")
+    fig_12_bins.savefig("/Users/Daniel/Code/Genre/visualizations/12_bins_bias.png")
 
     # generate figure with paths (path = biases for each nested subset)
     fig_paths = plot_bias_paths(biases, k)
@@ -97,7 +97,7 @@ def generate_bias_plots():
         "/Users/Daniel/Code/Genre/visualizations/twobin_means_selection.png"
     )
 
-    return fig_11_bins, fig_paths, fig_means, fig_means_select
+    return fig_12_bins, fig_paths, fig_means, fig_means_select
 
 
 # functions called
@@ -116,7 +116,7 @@ def create_length_counts_by_gender(df):
     Output: dataframe with counts by gender and total for each
         length of genre list in the dataset
 
-    Use: called by bias_two_bins and bias_11_bins to calculate gender bias in two bins,
+    Use: called by bias_two_bins and bias_12_bins to calculate gender bias in two bins,
     small (<6) and large (>5) genre list lengths
     """
 
@@ -190,7 +190,7 @@ def bias_12_bins(df, percent_fem, percent_mal):
     by gender, and bias ratios by gender.
 
 
-    Use: plot_bias_11_bin()
+    Use: plot_bias_12_bin()
     """
     lcbg = create_length_counts_by_gender(df)
     # bin 14+
@@ -222,12 +222,12 @@ def plot_bias_12_bins(df_bias):
     
     fig, axs = plt.subplots(figsize = (14,10))
     fig.tight_layout(pad = 6.0)
-    fig.suptitle('The ratio of actual to expected numbers of female and male artists.', fontsize = 20)
+    fig.suptitle('The ratio of observed to expected numbers of female and male artists.', fontsize = 20)
     axs.bar(x_fem,df_bias['female bias'], color = 'orange', label = 'female')
     axs.bar(x_mal,df_bias['male bias'], color = 'purple', label = 'male')
 
     # y range
-    axs.set_ylim(0,1.5)
+    axs.set_ylim(0,1.7)
 
     # styles
     # axs.set_title('Gender Bias In Genre List Length'.title(), fontsize = 14)
@@ -332,7 +332,7 @@ def plot_bias_paths(biases, k):
     """plot the paths for the runs of each nested subsets"""
     fig, axs = plt.subplots(2, 1, figsize=(14, 10))
     fig.suptitle(
-        "The ratio of actual to expected numbers of artists over 100 nested subsets.",
+        "The ratio of observed to expected numbers of artists over 100 nested subsets.",
         fontsize=20,
     )
     fig.tight_layout(pad=6.0)
@@ -501,7 +501,7 @@ def plot_bias_stats(biases):
     fig, axs = plt.subplots(2, 1, sharey=True, figsize=(14, 10))
     fig.tight_layout(pad=6.0)
     fig.suptitle(
-        "The ratio of actual to expected percentages of artists. The error bars show one STD",
+        "The ratio of observed to expected percentages of artists. The error bars show one STD",
         fontsize=20,
     )
     axs[0].bar(
@@ -601,7 +601,7 @@ def plot_bias_stats_selection(biases):
 
     fig, axs = plt.subplots(2, 1, sharey=True, figsize=(14, 10))
     fig.tight_layout(pad=6.0)
-    # fig.suptitle('The ratio of actual to expected percentages of artists. For 1-5 genre lables, there is little bias. The error bars show one STD', fontsize = 20)
+    # fig.suptitle('The ratio of observed to expected percentages of artists. For 1-5 genre lables, there is little bias. The error bars show one STD', fontsize = 20)
     axs[0].bar(
         fem_small_index,
         fem_small,
