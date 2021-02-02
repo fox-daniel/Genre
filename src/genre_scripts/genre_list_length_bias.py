@@ -70,34 +70,33 @@ def generate_bias_plots():
         percent_mal=percent_mal,
     )
 
-    # generate figure with bias_12_bins
-    lcbg_12_bins = bias_12_bins(data, percent_fem, percent_mal)
-    fig_12_bins = plot_bias_12_bins(lcbg_12_bins)
+    # generate figure with bias_11_bins
+    lcbg_11_bins = bias_11_bins(data, percent_fem, percent_mal)
+    fig_11_bins = plot_bias_11_bins(lcbg_11_bins)
 
     # save the figure
-    fig_12_bins.savefig("/Users/Daniel/Code/Genre/visualizations/12_bins_bias.png")
+    fig_11_bins.savefig("/Users/Daniel/Code/Genre/visualizations/11_bins_bias.png", dpi = 144)
 
     # generate figure with paths (path = biases for each nested subset)
     fig_paths = plot_bias_paths(biases, k)
 
     # save the figure
-    fig_paths.savefig("/Users/Daniel/Code/Genre/visualizations/twobin_paths.png")
+    fig_paths.savefig("/Users/Daniel/Code/Genre/visualizations/twobin_paths.png", dpi = 144)
 
     # generate bar graph with mean and std over runs for each size
     fig_means = plot_bias_stats(biases)
 
     # save the figure
-    fig_means.savefig("/Users/Daniel/Code/Genre/visualizations/twobin_means.png")
+    fig_means.savefig("/Users/Daniel/Code/Genre/visualizations/twobin_means.png", dpi = 144)
 
     # generate bar graph with mean and std over runs for full set and size of 4648
     fig_means_select = plot_bias_stats_selection(biases)
 
     # save the figure
     fig_means_select.savefig(
-        "/Users/Daniel/Code/Genre/visualizations/twobin_means_selection.png"
-    )
+        "/Users/Daniel/Code/Genre/visualizations/twobin_means_selection.png", dpi = 144)
 
-    return fig_12_bins, fig_paths, fig_means, fig_means_select
+    return fig_11_bins, fig_paths, fig_means, fig_means_select
 
 
 # functions called
@@ -116,7 +115,7 @@ def create_length_counts_by_gender(df):
     Output: dataframe with counts by gender and total for each
         length of genre list in the dataset
 
-    Use: called by bias_two_bins and bias_12_bins to calculate gender bias in two bins,
+    Use: called by bias_two_bins and bias_11_bins to calculate gender bias in two bins,
     small (<6) and large (>5) genre list lengths
     """
 
@@ -142,12 +141,12 @@ def create_length_counts_by_gender(df):
     return df
 
 
-def bias_12_bins(df, percent_fem, percent_mal):
+def bias_11_bins(df, percent_fem, percent_mal):
 
     lcbg = create_length_counts_by_gender(df)
     # bin 14+
-    lcbg.loc["12+"] = lcbg.loc[12:].sum()
-    inds = [*range(1, 12), "12+"]
+    lcbg.loc["11+"] = lcbg.loc[11:].sum()
+    inds = [*range(1, 11), "11+"]
     lcbg = lcbg.loc[inds]
     # expected values
     #     lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
@@ -201,17 +200,17 @@ def bias_two_bins(df, percent_fem, percent_mal):
     return twobins
 
 
-def bias_12_bins(df, percent_fem, percent_mal):
+def bias_11_bins(df, percent_fem, percent_mal):
     """Create dataframe with counts by gender, expected counts
     by gender, and bias ratios by gender.
 
 
-    Use: plot_bias_12_bin()
+    Use: plot_bias_11_bin()
     """
     lcbg = create_length_counts_by_gender(df)
     # bin 14+
-    lcbg.loc["12+"] = lcbg.loc[12:].sum()
-    inds = [*range(1, 12), "12+"]
+    lcbg.loc["11+"] = lcbg.loc[11:].sum()
+    inds = [*range(1, 11), "11+"]
     lcbg = lcbg.loc[inds]
     # expected values
     #     lcbg['female artist expected'] = np.ceil(lcbg['total']*percent_fem).astype(int)
@@ -225,11 +224,11 @@ def bias_12_bins(df, percent_fem, percent_mal):
     return lcbg
 
 
-def plot_bias_12_bins(df_bias):
+def plot_bias_11_bins(df_bias):
     """Generate figure with bar graph showing gender bias
-    for 12 bins.
+    for 11 bins.
 
-    Input: dataframe returned from bias_12_bins()
+    Input: dataframe returned from bias_11_bins()
     """
     x_fem = np.arange(1, 3 * df_bias.shape[0], 3)
     x_mal = np.arange(2, 3 * df_bias.shape[0], 3)
@@ -238,10 +237,10 @@ def plot_bias_12_bins(df_bias):
 
     fig, axs = plt.subplots(figsize=(14, 10))
     fig.tight_layout(pad=6.0)
-    fig.suptitle(
-        "The ratio of observed to expected numbers of female and male artists.",
-        fontsize=20,
-    )
+    # fig.suptitle(
+    #     "The ratio of observed to expected numbers of female and male artists.",
+    #     fontsize=20,
+    # )
     axs.bar(x_fem, df_bias["female bias"], color="orange", label="female")
     axs.bar(x_mal, df_bias["male bias"], color="purple", label="male")
 
