@@ -252,9 +252,9 @@ def plot_bias_11_bins(df_bias):
 
     axs.set_xticks(xlabel_pos)
     axs.set_xticklabels(xticklabels, fontsize=14, rotation=0)
-    axs.set_xlabel("Genre List Length", fontsize=14)
-    axs.set_ylabel("Ratio of Observed to Expected Artists", fontsize=14)
-    axs.legend()
+    axs.set_xlabel("Genre List Length", fontsize=20)
+    axs.set_ylabel("Ratio of Observed to Expected Artists", fontsize=20)
+    axs.legend(fontsize = 20)
 
     return fig
 
