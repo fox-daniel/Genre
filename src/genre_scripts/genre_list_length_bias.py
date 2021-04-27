@@ -14,10 +14,11 @@ import seaborn as sns
 sns.set()
 
 
-def generate_bias_plots():
+def generate_bias_plots(now):
+    """
+    The parameter "now" is the date for latest version of the data set
+    """
 
-    # get currrent date for latest version of data set
-    now = "2020-07-07-09-58"
 
     # import the data: train and test
     X_path_train = "/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_X_train_{}.csv".format(
