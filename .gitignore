@@ -4,3 +4,5 @@
 *.pem
 *-checkpoint.ipynb
 *.pyc
+*.cpython-37.pyc
+data/genre_lists/data_ready_for_model/*.csv
