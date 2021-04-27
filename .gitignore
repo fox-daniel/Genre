@@ -4,3 +4,4 @@
 *.pem
 *-checkpoint.ipynb
 *.pyc
+*.cpython-37.pyc
