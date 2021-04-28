@@ -1,14 +1,17 @@
 # Genre and Gender
 ### Project Team Members: Daniel Fox and Tom Johnson
-- To explore this project in more detail run the Jupyter notebook main.ipynb. You may need to first set up a virtual environment to have the correct dependencies:
-    - ```$ python3.7 -m virtualenv genre_env```
-    - ```$ source genre_env/bin/activate```
-    - ```$ pip install -r requirements.txt```
-    - ```$ python -m ipykernel install --user --name=genre_env```
-    - ```$ jupyter notebook &```
-    - open the notebook main.ipynb
-    - switch the kernel to genre_env. 
-    - run the notebook  
+- To explore this project in more detail run the Jupyter notebook main.ipynb. You may need to add some dependencies. To do this, we recommend you first set up a virtual environment. Assuming you have Python 3.7, follow these steps: 
+    - Create a virtual environment:
+    	- ```$ python3.7 -m virtualenv genre_env```
+    - Activate the virtual environment
+    	- ```$ source genre_env/bin/activate```
+    - Install the requirements in the virtual environment
+    	- ```$ pip install -r requirements.txt```
+    - Add the virtual environment to the Jupyter Notebooks
+    	- ```$ python -m ipykernel install --user --name=genre_env```
+    - Open the notebook main.ipynb
+	    - ```$ jupyter notebook main.ipynb &```
+    - Run the notebook  
 
 ## Introduction
 
@@ -56,6 +59,6 @@ We also show that there is a nontrivial upper bound for the accuracy of any mode
 
 ## Bios:
 
-Daniel Fox is a doctoral candidate in Music at The Graduate Center, CUNY. His writing on music has appeared in Perspectives of New Music and Hyperallergic. His dissertation examines how technology and performance practices used within American experimental music shape our ideas about what is natural. He holds a PhD in mathematics from Duke University and has published math research in the Transactions of the American Mathematical Society and Communications in Analysis and Geometry. His compositions have been performed by the Jack Quartet and Talea Ensemble.
+With PhDs in Music from The Graduate Center, CUNY (2020) and Mathematics from Duke University (2005), Daniel Fox brings both depth and breadth to his current work in data science and engineering. Recent projects include showing [gender bias](https://github.com/fox-daniel/Genre) in music genre labels on Wikipedia and implementing an optimal [reservoir sampling algorithm](https://fox-daniel.github.io/iterative_methods_blog/book/iterative_methods_part_3.html) for an open source library in Rust. His [math research](https://www.researchgate.net/profile/Daniel_Fox21/research) has appeared in the Transactions of the American Mathematical Society and Communications in Analysis and Geometry; his [writing on music](https://thoughtstoodefinite.com/publications/) has appeared in Perspectives of New Music and Hyperallergic. The Jack Quartet and Talea Ensemble are among the virtuoso ensembles to perform his [compositions](https://thoughtstoodefinite.com/listen/). 
 
 Tom Johnson is a Visiting Assistant Professor of Music at Skidmore College. His current research focuses on streaming services and musical genre. He is particularly interested in how our musical experiences are mediated by (and in turn mediate) technologies like Spotify or Apple music. Tom has published on race in twenty-first century technologies, the role of tonality in early-20th-century modernist practices and on some recent literature on popular music genres.
