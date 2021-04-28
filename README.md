@@ -1,19 +1,20 @@
 # Genre and Gender
 ### Project Team Members: Daniel Fox and Tom Johnson
 - To explore this project in more detail run the Jupyter notebook main.ipynb. You may need to first set up a virtual environment to have the correct dependencies:
-	- ```$ python3.7 -m virtualenv genre_env```
-	- ```$ source genre_env/bin/activate```
-	- ```$ pip install -r requirements.txt```
-	- ```$ python -m ipykernel install --user --name=genre_env```
-	- ```$ jupyter notebook &```
-	- open the notebook main.ipynb
-	- switch the kernel to genre_env. 
-	- run the notebook  
+    - ```$ python3.7 -m virtualenv genre_env```
+    - ```$ source genre_env/bin/activate```
+    - ```$ pip install -r requirements.txt```
+    - ```$ python -m ipykernel install --user --name=genre_env```
+    - ```$ jupyter notebook &```
+    - open the notebook main.ipynb
+    - switch the kernel to genre_env. 
+    - run the notebook  
 
 ## Introduction
-Digital repositories of knowledge such as Wikipedia continue to use music classification systems derived from prejudiced hierarchical systems. Despite initial claims of neutral algorithmic approaches, broad research has shown how automation perpetuates the existing social inequities. Within music culture it is thus important to ask, Is there gender bias in the genre labels for musicians on Wikipedia? Our project answers this question in the affirmative using a dataset of ~15,000 music artists labeled with their genders and genres. We have shown that female artists are significantly under represented within the set of artists with six or more genre labels. In the context of music studies, our work refines the understanding of how digital databases are reinforcing historical social inequities. 
-## Project Description
 
+Digital repositories of knowledge such as Wikipedia continue to use music classification systems derived from prejudiced hierarchical systems. Despite initial claims of neutral algorithmic approaches, broad research has shown how automation perpetuates the existing social inequities. Within music culture it is thus important to ask, Is there gender bias in the genre labels for musicians on Wikipedia? Our project answers this question in the affirmative using a dataset of \~15,000 music artists labeled with their genders and genres. We have shown that female artists are significantly under represented within the set of artists with six or more genre labels. In the context of music studies, our work refines the understanding of how digital databases are reinforcing historical social inequities.
+
+## Project Description
 Is there gender bias in the genre labels for musicians on Wikipedia? This project provides an affirmative answer by combining humanistic and data driven approaches. Research has shown that 21st-century repositories of knowledge residing in media(ting) services like Google or Wikipedia re-inscribe systemic asymmetries.  Rather than sidestepping social bias, automation amplifies existing social inequities.  On Wikipedia, only 15% of biographical articles are about women (Graells-Garrido et al, 2015).  More subtle metrics reveal systematic gender bias in more than just article counts. Wagner et al. demonstrate lexical bias (female is the marked gender) and “assortativity” bias (articles about women are more likely to link to men than the other way around).  
 
 As music listening is increasingly influenced by online databases and recommendation systems, the domain-specific cultural practices encoded in music genre labeling is amplified. Classification of musical types has been guided by prejudiced groupings of musicians and audiences.  If Wikipedia’s metadata reflects this hierarchical tradition, then we expect genres to be unevenly associated with male and female artists. Moving beyond the mere preponderance of male artists, our research reveals one of the modes through which genre labeling amplifies gender bias.  
@@ -30,12 +31,12 @@ There are inherent limits to the accuracy of any model that classifies the gende
 
 We analyze the correlation between inferred binary gender labels and the number of genre labels present in Wikipedia infoboxes for musicians. We compare the observed number of female and male artists with a given number (or numerical range) of genres to the expected number of artists. The expected numbers of artists are calculated using the percentages of female and male artits in the total population. The null hypothesis is that there is no correlation between gender and the number of genre labels. We apply Chi-Square tests and report the p-values to measure the probability that the observed correlations would arise from chance if the null hypothesis were true. We analyze the data using two levels of detail.
 
-#### 12 Bins
+#### 11 Bins
 
-We divide artists into 12 groups. These groups correspond to the number of labels that each artist in the group has, except for the last group, "12+", which counts all artists with 12 or more labels. We use the 12+ category to ensure that the expected number of artists in each category is at least 5, a condition that ensures the applicability of the Chi-Square test. It is worth noting that, in the current data set, there are no female artists with 12 or more labels, but 19 males with 12 or more labels. Using SciPy's Chi-Square-test functions, we find that the p-value is 3e-13. This provides extremely strong confidence in rejecting the null hypothesis. We conclude that there is a correlation between gender and number of genre labels. We can visualize this using a bar plot that reports the ratio 
+We divide artists into 11 groups. These groups correspond to the number of labels that each artist in the group has, except for the last group, "11+", which counts all artists with 11 or more labels. We use the 11+ category to ensure that the expected number of artists in each category is at least 5, a condition that ensures the applicability of the Chi-Square test. It is worth noting that, in the current data set, there are no female artists with 12 or more labels, but 19 males with 12 or more labels. Using SciPy's Chi-Square-test functions, we find that the p-value is 3e-13. This provides extremely strong confidence in rejecting the null hypothesis. We conclude that there is a correlation between gender and number of genre labels. We can visualize this using a bar plot that reports the ratio 
 ##### <div align="center">(observed number of artists)/(expected number of artists) </div>
 for both male and female artists in each category.
-![Gender Bias by Number of Genre Labels](./visualizations/12_bins_bias.png)
+![Gender Bias by Number of Genre Labels](./visualizations/11_bins_bias.png)
 
 #### 2 Bins
 
