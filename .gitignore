@@ -5,9 +5,9 @@
 *-checkpoint.ipynb
 *.pyc
 *.cpython-37.pyc
-./data/genre_lists/data_ready_for_model/genre_list_*.csv
-./data/genre_lists/data_ready_for_model/wiki-kaggle_X_test_*.csv
-./data/genre_lists/data_ready_for_model/wiki-kaggle_X_train_*.csv
-./data/genre_lists/data_ready_for_model/wiki-kaggle_genres_gender_cleaned_*.csv
-./data/genre_lists/data_ready_for_model/wiki-kaggle_y_test_*.csv
-./data/genre_lists/data_ready_for_model/wiki-kaggle_y_train_*.csv
+data/genre_lists/data_ready_for_model/genre_list_*.csv
+data/genre_lists/data_ready_for_model/wiki-kaggle_X_test_*.csv
+data/genre_lists/data_ready_for_model/wiki-kaggle_X_train_*.csv
+data/genre_lists/data_ready_for_model/wiki-kaggle_genres_gender_cleaned_*.csv
+data/genre_lists/data_ready_for_model/wiki-kaggle_y_test_*.csv
+data/genre_lists/data_ready_for_model/wiki-kaggle_y_train_*.csv
