@@ -14,22 +14,23 @@ import seaborn as sns
 sns.set()
 
 
-def generate_bias_plots():
+def generate_bias_plots(now):
+    """
+    The parameter "now" is the date for latest version of the data set
+    """
 
-    # get currrent date for latest version of data set
-    now = "2020-07-07-09-58"
 
     # import the data: train and test
-    X_path_train = "/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_X_train_{}.csv".format(
+    X_path_train = "./data/genre_lists/data_ready_for_model/wiki-kaggle_X_train_{}.csv".format(
         now
     )
-    y_path_train = "/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_y_train_{}.csv".format(
+    y_path_train = "./data/genre_lists/data_ready_for_model/wiki-kaggle_y_train_{}.csv".format(
         now
     )
-    X_path_test = "/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_X_test_{}.csv".format(
+    X_path_test = "./data/genre_lists/data_ready_for_model/wiki-kaggle_X_test_{}.csv".format(
         now
     )
-    y_path_test = "/Users/Daniel/Code/Genre/data/genre_lists/data_ready_for_model/wiki-kaggle_y_test_{}.csv".format(
+    y_path_test = "./data/genre_lists/data_ready_for_model/wiki-kaggle_y_test_{}.csv".format(
         now
     )
 
@@ -75,26 +76,26 @@ def generate_bias_plots():
     fig_11_bins = plot_bias_11_bins(lcbg_11_bins)
 
     # save the figure
-    fig_11_bins.savefig("/Users/Daniel/Code/Genre/visualizations/11_bins_bias.png", dpi = 144)
+    fig_11_bins.savefig("./visualizations/11_bins_bias.png", dpi = 144)
 
     # generate figure with paths (path = biases for each nested subset)
     fig_paths = plot_bias_paths(biases, k)
 
     # save the figure
-    fig_paths.savefig("/Users/Daniel/Code/Genre/visualizations/twobin_paths.png", dpi = 144)
+    fig_paths.savefig("./visualizations/twobin_paths.png", dpi = 144)
 
     # generate bar graph with mean and std over runs for each size
     fig_means = plot_bias_stats(biases)
 
     # save the figure
-    fig_means.savefig("/Users/Daniel/Code/Genre/visualizations/twobin_means.png", dpi = 144)
+    fig_means.savefig("./visualizations/twobin_means.png", dpi = 144)
 
     # generate bar graph with mean and std over runs for full set and size of 4648
     fig_means_select = plot_bias_stats_selection(biases)
 
     # save the figure
     fig_means_select.savefig(
-        "/Users/Daniel/Code/Genre/visualizations/twobin_means_selection.png", dpi = 144)
+        "./visualizations/twobin_means_selection.png", dpi = 144)
 
     return fig_11_bins, fig_paths, fig_means, fig_means_select
 
